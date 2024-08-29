@@ -11,7 +11,7 @@ import SwiftUI
 struct VirtualPetApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            OnboardingView(users: .constant([User(username: "Marina", password: "***")]))
         }
     }
 }

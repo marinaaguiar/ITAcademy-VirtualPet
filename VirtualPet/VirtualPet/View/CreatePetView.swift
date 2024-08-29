@@ -7,21 +7,24 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct CreatePetView: View {
-    @State private var selectedCreature = "Cat"
+    @State private var selectedCreature: PetType = .cat
     @State private var petName = ""
     @State private var petColor = Color.blue
     @State private var uniqueCharacteristic = ""
 
-    let creatures = ["Cat", "Dog", "Rabbit", "Bear"]
+    @Binding var isPresented: Bool
+    @Binding var pets: [Pet]
 
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Choose Your Creature")) {
                     Picker("Creature", selection: $selectedCreature) {
-                        ForEach(creatures, id: \.self) {
-                            Text($0)
+                        ForEach(PetType.allCases) { creature in
+                            Text(creature.rawValue).tag(creature)
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
@@ -37,8 +40,9 @@ struct CreatePetView: View {
 
                 Section {
                     Button(action: {
-                        // Handle pet creation logic here
-                        print("Pet created: \(petName), \(selectedCreature), \(petColor), \(uniqueCharacteristic)")
+                        let newPet = Pet(name: petName, type: selectedCreature, color: petColor, uniqueCharacteristic: uniqueCharacteristic)
+                        pets.append(newPet)
+                        isPresented = false
                     }) {
                         Text("Create Pet")
                             .font(.headline)
@@ -52,12 +56,14 @@ struct CreatePetView: View {
             }
             .navigationTitle("Create a Pet")
             .navigationBarItems(trailing: Button("Cancel") {
-                // Dismiss the CreatePetView
+                isPresented = false
             })
         }
     }
 }
 
-#Preview {
-    CreatePetView()
+struct CreatePetView_Previews: PreviewProvider {
+    static var previews: some View {
+        CreatePetView(isPresented: .constant(true), pets: .constant([]))
+    }
 }
