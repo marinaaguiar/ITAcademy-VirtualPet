@@ -8,46 +8,68 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var isCreatingPet = false
-    @State private var pets: [Pet] = []
-    @Binding var users: [User]
+    @State private var showCreatePetView = false
+
+    @Binding var pets: [Pet]
 
     var body: some View {
-        VStack(spacing: 35) {
-            Image("VirtualPetIconPng")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 200, height: 200)
+        NavigationView {
+            VStack {
+                Spacer()
+                Image("VirtualPetIconPng")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 150, height: 150)
+                    .padding(.top, 50)
 
-            NavigationLink(destination: RegistrationView(users: $users)) {
-                Text("Register New Account")
-                    .font(.headline)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
+                if pets.isEmpty {
+                    Text("No pets created yet.")
+                        .font(.headline)
+                        .padding(.top, 20)
 
-            Button(action: {
-                isCreatingPet = true
-            }) {
-                Text("Create a New Pet")
-                    .font(.headline)
-                    .padding()
-                    .background(Color.mint)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+                    Spacer()
+                    Button(action: {
+                        showCreatePetView = true
+                    }) {
+                        Text("Create New Pet")
+                            .font(.headline)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.mint)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .padding(25)
+                } else {
+                    List(pets) { pet in
+                        NavigationLink(destination: PetDetailsView(pet: pet)) {
+                            VStack(alignment: .leading) {
+                                Text(pet.name)
+                                    .font(.headline)
+                                Text(pet.type.rawValue)
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                    }
+                    .padding(.bottom, -10)
+                }
+                Spacer()
             }
-            .sheet(isPresented: $isCreatingPet) {
-                CreatePetView(isPresented: $isCreatingPet, pets: $pets)
+            .navigationTitle("Virtual Pet")
+            .sheet(isPresented: $showCreatePetView) {
+                CreatePetView(isPresented: $showCreatePetView, pets: $pets)
             }
         }
-        .padding(.top, -50)
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(users: .constant([User(username: "Marina", password: "***")]))
+        HomeView(pets: .constant([
+            Pet(name: "Claudio", type: .cat, color: .orange, uniqueCharacteristic: "Fluffy tail"),
+            Pet(name: "Fluffy", type: .cat, color: .orange, uniqueCharacteristic: "Fluffy tail"),
+
+        ]))
     }
 }
