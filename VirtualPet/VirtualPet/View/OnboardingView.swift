@@ -10,8 +10,10 @@ import SwiftUI
 struct OnboardingView: View {
     @State private var showRegistration = false
     @State private var showLogin = false
+    @State private var navigateToHome = false
 
     @Binding var users: [User]
+    @State private var pets: [Pet] = []
 
     var body: some View {
         NavigationView {
@@ -24,6 +26,10 @@ struct OnboardingView: View {
                     .frame(width: 200, height: 200)
 
                 Spacer()
+                NavigationLink(destination: HomeView(pets: $pets), isActive: $navigateToHome) {
+                    EmptyView()
+                }
+
                 Button(action: {
                     showRegistration = true
                 }) {
@@ -37,7 +43,7 @@ struct OnboardingView: View {
                 }
                 .padding(.horizontal)
                 .sheet(isPresented: $showRegistration) {
-                    RegistrationView(users: $users)
+                    RegistrationView(users: $users, navigateToHome: $navigateToHome)
                 }
 
                 Button(action: {

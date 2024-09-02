@@ -16,6 +16,9 @@ struct RegistrationView: View {
     @State private var alertMessage = ""
 
     @Binding var users: [User]
+    @Binding var navigateToHome: Bool
+
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         NavigationView {
@@ -72,17 +75,19 @@ struct RegistrationView: View {
         let newUser = User(username: username, password: password)
         users.append(newUser)
 
-        // Additional logic to save user data can be added here
+        // Dismiss the RegistrationView
+        presentationMode.wrappedValue.dismiss()
 
-        // Clear the fields after successful registration
-        username = ""
-        password = ""
-        confirmPassword = ""
+        // Navigate to HomeView
+        navigateToHome = true
     }
 }
 
 struct RegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        RegistrationView(users: .constant([User(username: "Marina", password: "***")]))
+        RegistrationView(
+            users: .constant([User(username: "Marina", password: "***")]),
+            navigateToHome: .constant(false)
+        )
     }
 }
