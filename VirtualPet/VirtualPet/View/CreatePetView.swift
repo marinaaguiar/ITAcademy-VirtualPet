@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct CreatePetView: View {
     @State private var selectedCreature: PetType = .cat
     @State private var petName = ""
     @State private var petColor = Color.blue
     @State private var uniqueCharacteristic = ""
+    @State private var mood: PetMood = .happy
+    @State private var energyLevel: Int = 100
+    @State private var needs: String = "None"
 
     @Binding var isPresented: Bool
     @Binding var pets: [Pet]
@@ -40,7 +41,15 @@ struct CreatePetView: View {
 
                 Section {
                     Button(action: {
-                        let newPet = Pet(name: petName, type: selectedCreature, color: petColor, uniqueCharacteristic: uniqueCharacteristic)
+                        let newPet = Pet(
+                            name: petName,
+                            type: selectedCreature,
+                            color: petColor,
+                            uniqueCharacteristic: uniqueCharacteristic,
+                            mood: mood,
+                            energyLevel: energyLevel,
+                            needs: needs
+                        )
                         pets.append(newPet)
                         isPresented = false
                     }) {
@@ -52,6 +61,7 @@ struct CreatePetView: View {
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }
+                    .listRowBackground(Color.clear)
                 }
             }
             .navigationTitle("Create a Pet")
