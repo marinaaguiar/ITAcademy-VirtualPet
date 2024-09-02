@@ -14,4 +14,7 @@ struct Pet: Identifiable {
     var type: PetType
     var color: Color
     var uniqueCharacteristic: String
+    var mood: PetMood = .happy
+    var energyLevel: Int = 10
+    var needs: String = "Care"
 }
