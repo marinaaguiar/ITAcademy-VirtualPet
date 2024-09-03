@@ -6,3 +6,32 @@
 //
 
 import Foundation
+
+//enum PetNeeds: String {
+//    case full = "Full"
+//    case hydrated = "Hydrated"
+//    case loved = "Loved"
+//    case hungry = "Hungry"
+//    case thirsty = "Thirsty"
+//    case care = "Care"
+//}
+
+enum PetNeeds: String, CaseIterable {
+    case full = "Full"
+    case hydrated = "Hydrated"
+    case loved = "Loved"
+    case hungry = "Hungry"
+    case thirsty = "Thirsty"
+    case care = "Care"
+
+    func opposite() -> PetNeeds? {
+        switch self {
+        case .full: return .hungry
+        case .hydrated: return .thirsty
+        case .loved: return .care
+        case .hungry: return .full
+        case .thirsty: return .hydrated
+        case .care: return .loved
+        }
+    }
+}
