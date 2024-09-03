@@ -8,11 +8,20 @@
 import Foundation
 
 enum PetType: String, CaseIterable, Identifiable {
-    case cat = "Cat"
-    case dog = "Dog"
-    case rabbit = "Rabbit"
-    case bear = "Bear"
+    case orangeCat = "Orange Cat"
+    case blackCat = "Black Cat"
+    case lightGrayCat = "Light Gray Cat"
+    case darkGrayCat = "Dark Gray Cat"
 
     var id: String { self.rawValue }
+
+    func getLottieFileName() -> String {
+        switch self {
+        case .orangeCat: return "Cat-Orange"
+        case .blackCat: return "Cat-Black"
+        case .lightGrayCat: return "Cat-LightGray"
+        case .darkGrayCat: return "Cat-DarkGray"
+        }
+    }
 }
 
