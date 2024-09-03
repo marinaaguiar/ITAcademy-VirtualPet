@@ -12,4 +12,18 @@ enum PetMood: String {
     case sad = "Sad"
     case excited = "Excited"
     case tired = "Tired"
+
+    func getEmoji() -> String {
+        switch self {
+        case .happy:
+            return "😸"
+        case .sad:
+            return "😿"
+        case .excited:
+            return "😻"
+        case .tired:
+            return "😴"
+        }
+    }
+
 }
