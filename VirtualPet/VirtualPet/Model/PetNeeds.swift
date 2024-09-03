@@ -7,15 +7,6 @@
 
 import Foundation
 
-//enum PetNeeds: String {
-//    case full = "Full"
-//    case hydrated = "Hydrated"
-//    case loved = "Loved"
-//    case hungry = "Hungry"
-//    case thirsty = "Thirsty"
-//    case care = "Care"
-//}
-
 enum PetNeeds: String, CaseIterable {
     case full = "Full"
     case hydrated = "Hydrated"

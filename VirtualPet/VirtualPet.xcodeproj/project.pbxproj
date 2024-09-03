@@ -9,9 +9,8 @@
 /* Begin PBXBuildFile section */
 		9C05AD302C81C9FF009D027D /* PetMood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C05AD2F2C81C9FF009D027D /* PetMood.swift */; };
 		9C05AD322C81CA20009D027D /* PetDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C05AD312C81CA20009D027D /* PetDetailsView.swift */; };
-		9C05AD352C86072B009D027D /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 9C05AD342C86072B009D027D /* Lottie */; };
 		9C05AD372C860743009D027D /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C05AD362C860743009D027D /* LottieView.swift */; };
-		9C05AD392C860776009D027D /* AnimatedCat.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C05AD382C860776009D027D /* AnimatedCat.json */; };
+		9C05AD3B2C8713A9009D027D /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 9C05AD3A2C8713A9009D027D /* Lottie */; };
 		9C15F5A72C7F48B400D3DFD4 /* VirtualPetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15F5A62C7F48B400D3DFD4 /* VirtualPetApp.swift */; };
 		9C15F5A92C7F48B400D3DFD4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15F5A82C7F48B400D3DFD4 /* ContentView.swift */; };
 		9C15F5AB2C7F48B500D3DFD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C15F5AA2C7F48B500D3DFD4 /* Assets.xcassets */; };
@@ -27,6 +26,14 @@
 		9C15F5DD2C7F76BA00D3DFD4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15F5DC2C7F76BA00D3DFD4 /* User.swift */; };
 		9C15F5DF2C7F78FF00D3DFD4 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15F5DE2C7F78FE00D3DFD4 /* OnboardingView.swift */; };
 		9C15F5E12C7F791200D3DFD4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15F5E02C7F791200D3DFD4 /* LoginView.swift */; };
+		9CF34C5B2C8715ED00114E72 /* Cat-LightGray.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CF34C5A2C8715ED00114E72 /* Cat-LightGray.json */; };
+		9CF34C5D2C87163700114E72 /* Cat-Black.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CF34C5C2C87163700114E72 /* Cat-Black.json */; };
+		9CF34C5F2C87165600114E72 /* Cat-Orange.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CF34C5E2C87165600114E72 /* Cat-Orange.json */; };
+		9CF34C612C87167D00114E72 /* Cat-DarkGray.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CF34C602C87167D00114E72 /* Cat-DarkGray.json */; };
+		9CF34C632C8721D900114E72 /* PetNeeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF34C622C8721D900114E72 /* PetNeeds.swift */; };
+		9CF34C652C873C9100114E72 /* PetDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF34C642C873C9100114E72 /* PetDetailsViewModel.swift */; };
+		9CF34C692C87427C00114E72 /* CreatePetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF34C682C87427C00114E72 /* CreatePetViewModel.swift */; };
+		9CF34C6B2C875FEF00114E72 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF34C6A2C875FEF00114E72 /* AuthViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +57,6 @@
 		9C05AD2F2C81C9FF009D027D /* PetMood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetMood.swift; sourceTree = "<group>"; };
 		9C05AD312C81CA20009D027D /* PetDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetailsView.swift; sourceTree = "<group>"; };
 		9C05AD362C860743009D027D /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
-		9C05AD382C860776009D027D /* AnimatedCat.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AnimatedCat.json; sourceTree = "<group>"; };
 		9C15F5A32C7F48B400D3DFD4 /* VirtualPet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualPet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C15F5A62C7F48B400D3DFD4 /* VirtualPetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualPetApp.swift; sourceTree = "<group>"; };
 		9C15F5A82C7F48B400D3DFD4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -69,6 +75,14 @@
 		9C15F5DC2C7F76BA00D3DFD4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9C15F5DE2C7F78FE00D3DFD4 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		9C15F5E02C7F791200D3DFD4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		9CF34C5A2C8715ED00114E72 /* Cat-LightGray.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Cat-LightGray.json"; sourceTree = "<group>"; };
+		9CF34C5C2C87163700114E72 /* Cat-Black.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Cat-Black.json"; sourceTree = "<group>"; };
+		9CF34C5E2C87165600114E72 /* Cat-Orange.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Cat-Orange.json"; sourceTree = "<group>"; };
+		9CF34C602C87167D00114E72 /* Cat-DarkGray.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Cat-DarkGray.json"; sourceTree = "<group>"; };
+		9CF34C622C8721D900114E72 /* PetNeeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetNeeds.swift; sourceTree = "<group>"; };
+		9CF34C642C873C9100114E72 /* PetDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetailsViewModel.swift; sourceTree = "<group>"; };
+		9CF34C682C87427C00114E72 /* CreatePetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePetViewModel.swift; sourceTree = "<group>"; };
+		9CF34C6A2C875FEF00114E72 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C05AD352C86072B009D027D /* Lottie in Frameworks */,
+				9C05AD3B2C8713A9009D027D /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,8 +137,12 @@
 				9C15F5A62C7F48B400D3DFD4 /* VirtualPetApp.swift */,
 				9C15F5D42C7F535600D3DFD4 /* View */,
 				9C15F5D52C7F536400D3DFD4 /* Model */,
+				9CF34C662C87424B00114E72 /* ViewModel */,
 				9C15F5AA2C7F48B500D3DFD4 /* Assets.xcassets */,
-				9C05AD382C860776009D027D /* AnimatedCat.json */,
+				9CF34C5E2C87165600114E72 /* Cat-Orange.json */,
+				9CF34C5A2C8715ED00114E72 /* Cat-LightGray.json */,
+				9CF34C5C2C87163700114E72 /* Cat-Black.json */,
+				9CF34C602C87167D00114E72 /* Cat-DarkGray.json */,
 				9C15F5AC2C7F48B500D3DFD4 /* Preview Content */,
 			);
 			path = VirtualPet;
@@ -177,8 +195,19 @@
 				9C15F5D82C7F538800D3DFD4 /* PetType.swift */,
 				9C15F5DC2C7F76BA00D3DFD4 /* User.swift */,
 				9C05AD2F2C81C9FF009D027D /* PetMood.swift */,
+				9CF34C622C8721D900114E72 /* PetNeeds.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		9CF34C662C87424B00114E72 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9CF34C642C873C9100114E72 /* PetDetailsViewModel.swift */,
+				9CF34C682C87427C00114E72 /* CreatePetViewModel.swift */,
+				9CF34C6A2C875FEF00114E72 /* AuthViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,7 +227,7 @@
 			);
 			name = VirtualPet;
 			packageProductDependencies = (
-				9C05AD342C86072B009D027D /* Lottie */,
+				9C05AD3A2C8713A9009D027D /* Lottie */,
 			);
 			productName = VirtualPet;
 			productReference = 9C15F5A32C7F48B400D3DFD4 /* VirtualPet.app */;
@@ -291,8 +320,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C05AD392C860776009D027D /* AnimatedCat.json in Resources */,
+				9CF34C612C87167D00114E72 /* Cat-DarkGray.json in Resources */,
+				9CF34C5D2C87163700114E72 /* Cat-Black.json in Resources */,
 				9C15F5AE2C7F48B500D3DFD4 /* Preview Assets.xcassets in Resources */,
+				9CF34C5B2C8715ED00114E72 /* Cat-LightGray.json in Resources */,
+				9CF34C5F2C87165600114E72 /* Cat-Orange.json in Resources */,
 				9C15F5AB2C7F48B500D3DFD4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,11 +357,15 @@
 				9C15F5DF2C7F78FF00D3DFD4 /* OnboardingView.swift in Sources */,
 				9C15F5DB2C7F76A900D3DFD4 /* RegistrationView.swift in Sources */,
 				9C15F5DD2C7F76BA00D3DFD4 /* User.swift in Sources */,
+				9CF34C6B2C875FEF00114E72 /* AuthViewModel.swift in Sources */,
 				9C15F5D32C7F514E00D3DFD4 /* HomeView.swift in Sources */,
 				9C05AD372C860743009D027D /* LottieView.swift in Sources */,
+				9CF34C632C8721D900114E72 /* PetNeeds.swift in Sources */,
 				9C15F5A72C7F48B400D3DFD4 /* VirtualPetApp.swift in Sources */,
 				9C15F5E12C7F791200D3DFD4 /* LoginView.swift in Sources */,
+				9CF34C692C87427C00114E72 /* CreatePetViewModel.swift in Sources */,
 				9C15F5D12C7F511A00D3DFD4 /* CreatePetView.swift in Sources */,
+				9CF34C652C873C9100114E72 /* PetDetailsViewModel.swift in Sources */,
 				9C05AD302C81C9FF009D027D /* PetMood.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -673,7 +709,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9C05AD342C86072B009D027D /* Lottie */ = {
+		9C05AD3A2C8713A9009D027D /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9C05AD332C86072B009D027D /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;

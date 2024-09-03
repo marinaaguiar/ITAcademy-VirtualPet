@@ -25,17 +25,17 @@ class PetDetailsViewModel: ObservableObject {
 
     func startTimers() {
         // Schedule the hunger update after 30 minutes
-        hungerTimer = Timer.scheduledTimer(withTimeInterval: 30 * 60, repeats: true) { _ in
+        hungerTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { _ in
             self.updateNeeds(need: .hungry)
         }
 
         // Schedule the thirst update after 15 minutes
-        thirstTimer = Timer.scheduledTimer(withTimeInterval: 15 * 60, repeats: true) { _ in
+        thirstTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) { _ in
             self.updateNeeds(need: .thirsty)
         }
 
         // Schedule the care update after 10 minutes
-        careTimer = Timer.scheduledTimer(withTimeInterval: 10 * 60, repeats: true) { _ in
+        careTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { _ in
             self.updateNeeds(need: .care)
         }
     }

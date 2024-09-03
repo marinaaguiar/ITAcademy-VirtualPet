@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum PetType: String, CaseIterable, Identifiable {
     case orangeCat = "Orange Cat"
@@ -21,6 +22,15 @@ enum PetType: String, CaseIterable, Identifiable {
         case .blackCat: return "Cat-Black"
         case .lightGrayCat: return "Cat-LightGray"
         case .darkGrayCat: return "Cat-DarkGray"
+        }
+    }
+
+    func getColor() -> Color {
+        switch self {
+        case .orangeCat: return .orange
+        case .blackCat: return .black
+        case .lightGrayCat: return .gray
+        case .darkGrayCat: return .gray.opacity(0.7)
         }
     }
 }

@@ -8,73 +8,61 @@
 import SwiftUI
 
 struct CreatePetView: View {
-    @State private var selectedCreature: PetType = .darkGrayCat
-    @State private var petName = ""
-    @State private var petColor = Color.blue
-    @State private var uniqueCharacteristic = ""
-    @State private var mood: PetMood = .happy
-    @State private var energyLevel: Int = 100
-    @State private var needs: PetNeeds = .loved
+    @ObservedObject var viewModel: CreatePetViewModel
 
     @Binding var isPresented: Bool
-    @Binding var pets: [Pet]
 
     var body: some View {
         NavigationView {
-            Form {
-                Section(header: Text("Choose Your Creature")) {
-                    Picker("Creature", selection: $selectedCreature) {
-                        ForEach(PetType.allCases) { creature in
-                            Text(creature.rawValue).tag(creature)
+            VStack {
+                LottieView(filename: viewModel.selectedCreature.getLottieFileName())
+                    .frame(height: 200)
+                    .clipped()
+                    .padding(.top, 20)
+
+                Form {
+                    Section(header: Text("Pet Details")) {
+                        TextField("Pet Name", text: $viewModel.petName)
+
+                        TextField("Unique Characteristic", text: $viewModel.uniqueCharacteristic)
+                    }
+
+                    Section(header: Text("Choose Your Cat")) {
+                        Picker("Color", selection: $viewModel.selectedCreature) {
+                            ForEach(PetType.allCases) { creature in
+                                Text(creature.rawValue).tag(creature)
+                            }
                         }
+                        .pickerStyle(.menu)
                     }
-                    .pickerStyle(SegmentedPickerStyle())
-                }
 
-                Section(header: Text("Pet Details")) {
-                    TextField("Pet Name", text: $petName)
-
-                    ColorPicker("Pick Pet Color", selection: $petColor)
-
-                    TextField("Unique Characteristic", text: $uniqueCharacteristic)
-                }
-
-                Section {
-                    Button(action: {
-                        let newPet = Pet(
-                            name: petName,
-                            type: selectedCreature, 
-                            imageName: "Pet-Claudio",
-                            color: petColor,
-                            uniqueCharacteristic: uniqueCharacteristic,
-                            mood: mood,
-                            energyLevel: energyLevel,
-                            needs: [needs]
-                        )
-                        pets.append(newPet)
-                        isPresented = false
-                    }) {
-                        Text("Create Pet")
-                            .font(.headline)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.mint)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                    Section {
+                        Button(action: {
+                            viewModel.createPet()
+                            isPresented = false
+                        }) {
+                            Text("Create Pet")
+                                .font(.headline)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.mint)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                        }
+                        .listRowBackground(Color.clear)
                     }
-                    .listRowBackground(Color.clear)
                 }
+                .navigationTitle("Create a Pet")
+                .navigationBarItems(trailing: Button("Cancel") {
+                    isPresented = false
+                })
             }
-            .navigationTitle("Create a Pet")
-            .navigationBarItems(trailing: Button("Cancel") {
-                isPresented = false
-            })
         }
     }
 }
 
 struct CreatePetView_Previews: PreviewProvider {
     static var previews: some View {
-        CreatePetView(isPresented: .constant(true), pets: .constant([]))
+        CreatePetView(viewModel: CreatePetViewModel(pets: []), isPresented: .constant(true))
     }
 }
