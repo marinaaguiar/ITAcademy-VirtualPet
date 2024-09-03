@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    @State private var showRegistration = false
-    @State private var showLogin = false
-    @State private var navigateToHome = false
-
     @Binding var users: [User]
     @State private var pets: [Pet] = []
 
+    @StateObject private var authViewModel: AuthViewModel
+
+    init(users: Binding<[User]>) {
+        _users = users
+        _authViewModel = StateObject(wrappedValue: AuthViewModel(users: users.wrappedValue))
+    }
+
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 20) {
 
                 Spacer()
@@ -26,13 +29,13 @@ struct OnboardingView: View {
                     .frame(width: 200, height: 200)
 
                 Spacer()
-                NavigationLink(destination: HomeView(pets: $pets), isActive: $navigateToHome) {
+
+                // NavigationLink for HomeView, triggered by authViewModel.navigateToHome
+                NavigationLink(destination: HomeView(pets: $pets), isActive: $authViewModel.navigateToHome) {
                     EmptyView()
                 }
 
-                Button(action: {
-                    showRegistration = true
-                }) {
+                NavigationLink(destination: RegistrationView(viewModel: authViewModel)) {
                     Text("Register")
                         .font(.headline)
                         .padding()
@@ -42,13 +45,8 @@ struct OnboardingView: View {
                         .cornerRadius(10)
                 }
                 .padding(.horizontal)
-                .sheet(isPresented: $showRegistration) {
-                    RegistrationView(users: $users, navigateToHome: $navigateToHome)
-                }
 
-                Button(action: {
-                    showLogin = true
-                }) {
+                NavigationLink(destination: LoginView(viewModel: authViewModel)) {
                     Text("Login")
                         .font(.headline)
                         .padding()
@@ -58,9 +56,6 @@ struct OnboardingView: View {
                         .cornerRadius(10)
                 }
                 .padding(.horizontal)
-                .sheet(isPresented: $showLogin) {
-                    LoginView(users: $users)
-                }
             }
             .padding(32)
             .navigationTitle("Virtual Pet")

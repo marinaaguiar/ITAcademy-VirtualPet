@@ -5,89 +5,50 @@
 //  Created by Marina Aguiar on 8/28/24.
 //
 
-import Foundation
 import SwiftUI
 
 struct RegistrationView: View {
-    @State private var username = ""
-    @State private var password = ""
-    @State private var confirmPassword = ""
-    @State private var showAlert = false
-    @State private var alertMessage = ""
-
-    @Binding var users: [User]
-    @Binding var navigateToHome: Bool
-
-    @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var viewModel: AuthViewModel
 
     var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("Create Account")) {
-                    TextField("Username", text: $username)
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
+        Form {
+            Section(header: Text("Create Account")) {
+                TextField("Username", text: $viewModel.username)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
 
-                    SecureField("Password", text: $password)
+                SecureField("Password", text: $viewModel.password)
 
-                    SecureField("Confirm Password", text: $confirmPassword)
-                }
-
-                Section {
-                    Button(action: registerUser) {
-                        Text("Register")
-                            .font(.headline)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.mint)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
-                    .listRowBackground(Color.clear)
-                }
+                SecureField("Confirm Password", text: $viewModel.confirmPassword)
             }
-            .navigationTitle("Register")
-            .alert(isPresented: $showAlert) {
-                Alert(title: Text("Registration Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+
+            Section {
+                Button(action: {
+                    viewModel.registerUser()
+                    // No need to dismiss, navigation is handled by the NavigationLink in OnboardingView
+                }) {
+                    Text("Register")
+                        .font(.headline)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.mint)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .listRowBackground(Color.clear)
             }
         }
-    }
-
-    private func registerUser() {
-        guard !username.isEmpty else {
-            alertMessage = "Username cannot be empty"
-            showAlert = true
-            return
+        .navigationTitle("Register")
+        .alert(isPresented: $viewModel.showAlert) {
+            Alert(title: Text("Registration Error"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
         }
-
-        guard password == confirmPassword else {
-            alertMessage = "Passwords do not match"
-            showAlert = true
-            return
-        }
-
-        guard password.count >= 6 else {
-            alertMessage = "Password must be at least 6 characters"
-            showAlert = true
-            return
-        }
-
-        let newUser = User(username: username, password: password)
-        users.append(newUser)
-
-        // Dismiss the RegistrationView
-        presentationMode.wrappedValue.dismiss()
-
-        // Navigate to HomeView
-        navigateToHome = true
     }
 }
 
 struct RegistrationView_Previews: PreviewProvider {
     static var previews: some View {
         RegistrationView(
-            users: .constant([User(username: "Marina", password: "***")]),
-            navigateToHome: .constant(false)
+            viewModel: AuthViewModel(users: [User(username: "Marina", password: "***")])
         )
     }
 }
