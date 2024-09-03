@@ -43,12 +43,21 @@ struct HomeView: View {
                 } else {
                     List(pets) { pet in
                         NavigationLink(destination: PetDetailsView(pet: pet)) {
-                            VStack(alignment: .leading) {
-                                Text(pet.name)
-                                    .font(.headline)
-                                Text(pet.type.rawValue)
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
+                            HStack {
+                                Image(pet.imageName)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(Circle())
+                                    .padding(.trailing, 10)
+
+                                VStack(alignment: .leading) {
+                                    Text(pet.name)
+                                        .font(.headline)
+                                    Text(pet.type.rawValue)
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                }
                             }
                         }
                     }
@@ -67,8 +76,8 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView(pets: .constant([
-            Pet(name: "Claudio", type: .cat, color: .orange, uniqueCharacteristic: "Fluffy tail"),
-            Pet(name: "Fluffy", type: .cat, color: .orange, uniqueCharacteristic: "Fluffy tail"),
+            Pet(name: "Claudio", type: .cat, imageName: "Pet-Claudio", color: .orange, uniqueCharacteristic: "Fluffy tail"),
+            Pet(name: "Fluffy", type: .cat, imageName: "Pet-Claudio", color: .orange, uniqueCharacteristic: "Fluffy tail"),
 
         ]))
     }

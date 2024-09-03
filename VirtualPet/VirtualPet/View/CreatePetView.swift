@@ -43,7 +43,8 @@ struct CreatePetView: View {
                     Button(action: {
                         let newPet = Pet(
                             name: petName,
-                            type: selectedCreature,
+                            type: selectedCreature, 
+                            imageName: "Pet-Claudio",
                             color: petColor,
                             uniqueCharacteristic: uniqueCharacteristic,
                             mood: mood,

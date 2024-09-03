@@ -13,32 +13,26 @@ struct PetDetailsView: View {
     var body: some View {
         ZStack(alignment: .top) {
 
-            Image("PetClaudio")
-                .resizable()
-                .scaledToFill()
+            LottieView(filename: "AnimatedCat")
                 .frame(height: 500)
                 .clipped()
-                .overlay(Color.black.opacity(0.3))
-
 
             VStack(alignment: .leading, spacing: 22) {
                 Spacer()
 
-                // Pet Name
                 Text(pet.name)
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
                     .padding(.leading)
+                    .padding(.top, 22)
 
-                // Pet Information Section
                 VStack(alignment: .leading, spacing: 22) {
 
                     HStack {
-                        InfoBadgeView(text: "Mood: " +  moodEmoji(for: pet.mood), backgroundColor: Color.yellow.opacity(0.3))
+                        InfoBadgeView(text: "Mood: " + moodEmoji(for: pet.mood), backgroundColor: Color.yellow.opacity(0.3))
                     }
 
-                    // Energy Level Bar
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Energy Level")
                             .font(.headline)
@@ -55,7 +49,6 @@ struct PetDetailsView: View {
                         }
                     }
 
-                    // Needs Section
                     VStack(alignment: .leading, spacing: 16) {
                         Text("Needs")
                             .font(.headline)
@@ -86,8 +79,6 @@ struct PetDetailsView: View {
                         }, title: "Pet", icon: "hand.raised.fill")
                     }
                     Spacer()
-
-
                 }
                 .padding(24)
                 .background(Color.white)
@@ -101,7 +92,6 @@ struct PetDetailsView: View {
         .background(Color(UIColor.systemGroupedBackground))
     }
 
-    // Helper function to get the mood emoji
     private func moodEmoji(for mood: PetMood) -> String {
         switch mood {
         case .happy: return "😄"
@@ -111,7 +101,6 @@ struct PetDetailsView: View {
         }
     }
 
-    // Helper function to get the color based on energy level
     private func energyLevelColor(for level: Int) -> Color {
         switch level {
         case 80...100: return .mint
@@ -121,7 +110,6 @@ struct PetDetailsView: View {
         }
     }
 
-    // Functions to perform actions on the pet
     private func feedPet() {
         pet.energyLevel = min(100, pet.energyLevel + 20)
         pet.needs = "Full"
@@ -200,7 +188,8 @@ struct PetDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         PetDetailsView(pet: Pet(
             name: "Claudio",
-            type: .cat,
+            type: .cat, 
+            imageName: "Pet-Claudio",
             color: .orange,
             uniqueCharacteristic: "Fluffy tail",
             mood: .happy,
