@@ -7,13 +7,18 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct PetDetailsView: View {
     @State var pet: Pet
+    @State private var hungerTimer: Timer?
+    @State private var thirstTimer: Timer?
+    @State private var careTimer: Timer?
 
     var body: some View {
         ZStack(alignment: .top) {
 
-            LottieView(filename: "AnimatedCat")
+            LottieView(filename: pet.type.getLottieFileName())
                 .frame(height: 500)
                 .clipped()
 
@@ -30,7 +35,7 @@ struct PetDetailsView: View {
                 VStack(alignment: .leading, spacing: 22) {
 
                     HStack {
-                        InfoBadgeView(text: "Mood: " + moodEmoji(for: pet.mood), backgroundColor: Color.yellow.opacity(0.3))
+                        InfoBadgeView(text: "Mood: " + pet.mood.getEmoji(), backgroundColor: Color.yellow.opacity(0.3))
                     }
 
                     VStack(alignment: .leading, spacing: 12) {
@@ -55,9 +60,9 @@ struct PetDetailsView: View {
                             .foregroundColor(.primary)
 
                         HStack(spacing: 16) {
-                            NeedItemView(iconName: "heart.fill", description: pet.needs)
-                            NeedItemView(iconName: "drop.fill", description: "Water")
-                            NeedItemView(iconName: "leaf.fill", description: "Care")
+                            ForEach(pet.needs, id: \.self) { need in
+                                NeedItemView(iconName: iconName(for: need), description: description(for: need))
+                            }
                         }
                     }
 
@@ -90,15 +95,35 @@ struct PetDetailsView: View {
         }
         .edgesIgnoringSafeArea(.top)
         .background(Color(UIColor.systemGroupedBackground))
+        .onAppear {
+            startTimers()
+        }
+        .onDisappear {
+            stopTimers()
+        }
     }
 
-    private func moodEmoji(for mood: PetMood) -> String {
-        switch mood {
-        case .happy: return "😄"
-        case .sad: return "😢"
-        case .excited: return "😺"
-        case .tired: return "😴"
+    private func startTimers() {
+        // Schedule the hunger update after 30 minutes
+        hungerTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { _ in
+            updateNeeds(need: .hungry)
         }
+
+        // Schedule the thirst update after 15 minutes
+        thirstTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) { _ in
+            updateNeeds(need: .thirsty)
+        }
+
+        // Schedule the care update after 10 minutes
+        careTimer = Timer.scheduledTimer(withTimeInterval: 20, repeats: true) { _ in
+            updateNeeds(need: .care)
+        }
+    }
+
+    private func stopTimers() {
+        hungerTimer?.invalidate()
+        thirstTimer?.invalidate()
+        careTimer?.invalidate()
     }
 
     private func energyLevelColor(for level: Int) -> Color {
@@ -112,22 +137,54 @@ struct PetDetailsView: View {
 
     private func feedPet() {
         pet.energyLevel = min(100, pet.energyLevel + 20)
-        pet.needs = "Full"
+        updateNeeds(need: .full)
         pet.mood = .happy
     }
 
     private func giveWaterToPet() {
-        pet.needs = "Hydrated"
+        updateNeeds(need: .hydrated)
         pet.mood = .happy
     }
 
     private func playWithPet() {
         pet.mood = .excited
+        updateNeeds(need: .loved)
         pet.energyLevel = max(0, pet.energyLevel - 10)
     }
 
     private func petThePet() {
         pet.mood = .happy
+        updateNeeds(need: .loved)
+    }
+
+    private func updateNeeds(need: PetNeeds) {
+        if let index = pet.needs.firstIndex(where: { $0 == need.opposite() }) {
+            pet.needs[index] = need
+        } else if !pet.needs.contains(need) {
+            pet.needs.append(need)
+        }
+    }
+
+    private func iconName(for need: PetNeeds) -> String {
+        switch need {
+        case .full: return "fish.fill"
+        case .hydrated: return "drop.fill"
+        case .loved: return "heart.fill"
+        case .hungry: return "fish"
+        case .thirsty: return "drop"
+        case .care: return "leaf.fill"
+        }
+    }
+
+    private func description(for need: PetNeeds) -> String {
+        switch need {
+        case .full: return "Full"
+        case .hydrated: return "Hydrated"
+        case .loved: return "Loved"
+        case .hungry: return "Hungry"
+        case .thirsty: return "Thirsty"
+        case .care: return "Needs Care"
+        }
     }
 }
 
@@ -188,13 +245,13 @@ struct PetDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         PetDetailsView(pet: Pet(
             name: "Claudio",
-            type: .cat, 
+            type: .lightGrayCat,
             imageName: "Pet-Claudio",
             color: .orange,
             uniqueCharacteristic: "Fluffy tail",
             mood: .happy,
             energyLevel: 80,
-            needs: "Food"
+            needs: [.full, .loved]
         ))
     }
 }

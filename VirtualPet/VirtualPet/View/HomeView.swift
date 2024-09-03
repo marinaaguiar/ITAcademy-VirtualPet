@@ -76,8 +76,8 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView(pets: .constant([
-            Pet(name: "Claudio", type: .cat, imageName: "Pet-Claudio", color: .orange, uniqueCharacteristic: "Fluffy tail"),
-            Pet(name: "Fluffy", type: .cat, imageName: "Pet-Claudio", color: .orange, uniqueCharacteristic: "Fluffy tail"),
+            Pet(name: "Claudio", type: .lightGrayCat, imageName: "Pet-Claudio", color: .orange, uniqueCharacteristic: "Fluffy tail"),
+            Pet(name: "Fluffy", type: .blackCat, imageName: "Pet-Claudio", color: .orange, uniqueCharacteristic: "Fluffy tail"),
 
         ]))
     }

@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct CreatePetView: View {
-    @State private var selectedCreature: PetType = .cat
+    @State private var selectedCreature: PetType = .darkGrayCat
     @State private var petName = ""
     @State private var petColor = Color.blue
     @State private var uniqueCharacteristic = ""
     @State private var mood: PetMood = .happy
     @State private var energyLevel: Int = 100
-    @State private var needs: String = "None"
+    @State private var needs: PetNeeds = .loved
 
     @Binding var isPresented: Bool
     @Binding var pets: [Pet]
@@ -49,7 +49,7 @@ struct CreatePetView: View {
                             uniqueCharacteristic: uniqueCharacteristic,
                             mood: mood,
                             energyLevel: energyLevel,
-                            needs: needs
+                            needs: [needs]
                         )
                         pets.append(newPet)
                         isPresented = false
