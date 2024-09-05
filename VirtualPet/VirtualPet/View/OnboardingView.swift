@@ -30,7 +30,6 @@ struct OnboardingView: View {
 
                 Spacer()
 
-                // NavigationLink for HomeView, triggered by authViewModel.navigateToHome
                 NavigationLink(destination: HomeView(pets: $pets), isActive: $authViewModel.navigateToHome) {
                     EmptyView()
                 }

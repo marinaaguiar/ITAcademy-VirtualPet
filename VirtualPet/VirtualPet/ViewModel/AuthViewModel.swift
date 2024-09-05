@@ -5,6 +5,8 @@
 //  Created by Marina Aguiar on 9/3/24.
 //
 import SwiftUI
+import Foundation
+import Combine
 
 class AuthViewModel: ObservableObject {
     @Published var username: String = ""
@@ -13,8 +15,9 @@ class AuthViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var alertMessage: String = ""
     @Published var navigateToHome: Bool = false
+    @Published var users: [User] = []
 
-    @Published var users: [User]
+    private let authService = AuthService()
 
     init(users: [User]) {
         self.users = users
@@ -39,24 +42,35 @@ class AuthViewModel: ObservableObject {
             return
         }
 
-        let newUser = User(username: username, password: password)
-        users.append(newUser)
-
-        // Reset fields and navigate to home
-        resetFields()
-        navigateToHome = true
+        authService.registerUser(username: username, password: password) { result in
+            switch result {
+            case .success:
+                self.resetFields()
+                self.navigateToHome = true
+            case .failure(let error):
+                self.alertMessage = "Failed to register: \(error.localizedDescription)"
+                self.showAlert = true
+            }
+        }
     }
 
     func loginUser() {
-        guard let user = users.first(where: { $0.username == username && $0.password == password }) else {
-            alertMessage = "Invalid username or password"
+        guard !username.isEmpty && !password.isEmpty else {
+            alertMessage = "Username or Password cannot be empty"
             showAlert = true
             return
         }
 
-        // Successful login
-        resetFields()
-        navigateToHome = true
+        authService.loginUser(username: username, password: password) { result in
+            switch result {
+            case .success:
+                self.resetFields()
+                self.navigateToHome = true
+            case .failure(let error):
+                self.alertMessage = "Failed to login: \(error.localizedDescription)"
+                self.showAlert = true
+            }
+        }
     }
 
     private func resetFields() {

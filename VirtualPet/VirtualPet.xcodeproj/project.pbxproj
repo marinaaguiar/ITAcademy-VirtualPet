@@ -26,6 +26,8 @@
 		9C15F5DD2C7F76BA00D3DFD4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15F5DC2C7F76BA00D3DFD4 /* User.swift */; };
 		9C15F5DF2C7F78FF00D3DFD4 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15F5DE2C7F78FE00D3DFD4 /* OnboardingView.swift */; };
 		9C15F5E12C7F791200D3DFD4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15F5E02C7F791200D3DFD4 /* LoginView.swift */; };
+		9C9BF5342C888B68001CF73C /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9BF5332C888B68001CF73C /* NetworkingService.swift */; };
+		9C9BF5362C889075001CF73C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9BF5352C889075001CF73C /* AuthService.swift */; };
 		9CF34C5B2C8715ED00114E72 /* Cat-LightGray.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CF34C5A2C8715ED00114E72 /* Cat-LightGray.json */; };
 		9CF34C5D2C87163700114E72 /* Cat-Black.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CF34C5C2C87163700114E72 /* Cat-Black.json */; };
 		9CF34C5F2C87165600114E72 /* Cat-Orange.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CF34C5E2C87165600114E72 /* Cat-Orange.json */; };
@@ -75,6 +77,9 @@
 		9C15F5DC2C7F76BA00D3DFD4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9C15F5DE2C7F78FE00D3DFD4 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		9C15F5E02C7F791200D3DFD4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		9C9BF5332C888B68001CF73C /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
+		9C9BF5352C889075001CF73C /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		9C9BF5372C88B00D001CF73C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9CF34C5A2C8715ED00114E72 /* Cat-LightGray.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Cat-LightGray.json"; sourceTree = "<group>"; };
 		9CF34C5C2C87163700114E72 /* Cat-Black.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Cat-Black.json"; sourceTree = "<group>"; };
 		9CF34C5E2C87165600114E72 /* Cat-Orange.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Cat-Orange.json"; sourceTree = "<group>"; };
@@ -134,6 +139,8 @@
 		9C15F5A52C7F48B400D3DFD4 /* VirtualPet */ = {
 			isa = PBXGroup;
 			children = (
+				9C9BF5372C88B00D001CF73C /* Info.plist */,
+				9C9BF5322C888B5A001CF73C /* NetworkingService */,
 				9C15F5A62C7F48B400D3DFD4 /* VirtualPetApp.swift */,
 				9C15F5D42C7F535600D3DFD4 /* View */,
 				9C15F5D52C7F536400D3DFD4 /* Model */,
@@ -198,6 +205,15 @@
 				9CF34C622C8721D900114E72 /* PetNeeds.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		9C9BF5322C888B5A001CF73C /* NetworkingService */ = {
+			isa = PBXGroup;
+			children = (
+				9C9BF5332C888B68001CF73C /* NetworkingService.swift */,
+				9C9BF5352C889075001CF73C /* AuthService.swift */,
+			);
+			path = NetworkingService;
 			sourceTree = "<group>";
 		};
 		9CF34C662C87424B00114E72 /* ViewModel */ = {
@@ -353,8 +369,10 @@
 				9C15F5D72C7F537600D3DFD4 /* Pet.swift in Sources */,
 				9C05AD322C81CA20009D027D /* PetDetailsView.swift in Sources */,
 				9C15F5D92C7F538800D3DFD4 /* PetType.swift in Sources */,
+				9C9BF5342C888B68001CF73C /* NetworkingService.swift in Sources */,
 				9C15F5A92C7F48B400D3DFD4 /* ContentView.swift in Sources */,
 				9C15F5DF2C7F78FF00D3DFD4 /* OnboardingView.swift in Sources */,
+				9C9BF5362C889075001CF73C /* AuthService.swift in Sources */,
 				9C15F5DB2C7F76A900D3DFD4 /* RegistrationView.swift in Sources */,
 				9C15F5DD2C7F76BA00D3DFD4 /* User.swift in Sources */,
 				9CF34C6B2C875FEF00114E72 /* AuthViewModel.swift in Sources */,
@@ -533,6 +551,7 @@
 				DEVELOPMENT_TEAM = DSYB3VSYU2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VirtualPet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -562,6 +581,7 @@
 				DEVELOPMENT_TEAM = DSYB3VSYU2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VirtualPet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

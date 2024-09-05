@@ -25,7 +25,6 @@ struct RegistrationView: View {
             Section {
                 Button(action: {
                     viewModel.registerUser()
-                    // No need to dismiss, navigation is handled by the NavigationLink in OnboardingView
                 }) {
                     Text("Register")
                         .font(.headline)
