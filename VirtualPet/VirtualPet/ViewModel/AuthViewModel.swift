@@ -48,8 +48,8 @@ class AuthViewModel: ObservableObject {
                 case .success:
                     self.resetFields()
                     self.navigateToHome = true
-                case .failure(let error):
-                    self.alertMessage = "Failed to register: \(error.localizedDescription)"
+                case .failure(let errorResponse):
+                    self.alertMessage = errorResponse.message
                     self.showAlert = true
                 }
             }
@@ -69,8 +69,8 @@ class AuthViewModel: ObservableObject {
                 case .success:
                     self.resetFields()
                     self.navigateToHome = true
-                case .failure(let error):
-                    self.alertMessage = "Failed to login: \(error.localizedDescription)"
+                case .failure(let errorResponse):
+                    self.alertMessage = errorResponse.message
                     self.showAlert = true
                 }
             }
