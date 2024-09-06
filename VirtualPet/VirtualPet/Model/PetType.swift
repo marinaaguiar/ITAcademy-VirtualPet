@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum PetType: String, CaseIterable, Identifiable {
+enum PetType: String, CaseIterable, Identifiable, Codable {
     case orangeCat = "Orange Cat"
     case blackCat = "Black Cat"
     case lightGrayCat = "Light Gray Cat"

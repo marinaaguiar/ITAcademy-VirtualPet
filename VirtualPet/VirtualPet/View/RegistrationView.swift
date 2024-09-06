@@ -47,7 +47,7 @@ struct RegistrationView: View {
 struct RegistrationView_Previews: PreviewProvider {
     static var previews: some View {
         RegistrationView(
-            viewModel: AuthViewModel(users: [User(username: "Marina", password: "***")])
+            viewModel: AuthViewModel(users: [User(id: UUID().uuidString, username: "Marina", password: "***", pets: [])])
         )
     }
 }

@@ -23,6 +23,7 @@ class CreatePetViewModel: ObservableObject {
 
     func createPet() {
         let newPet = Pet(
+            id: UUID().uuidString, 
             name: petName,
             type: selectedCreature,
             imageName: "Pet-Claudio",

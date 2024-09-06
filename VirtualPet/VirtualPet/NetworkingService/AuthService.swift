@@ -7,15 +7,11 @@
 
 import Foundation
 
-struct UserResponse: Decodable {
-    let token: String
-}
-
 class AuthService {
     private let networkingService = NetworkingService()
-    private let baseURL = "http://localhost:8080/api/auth"
+    private let baseURL = "http://127.0.0.1:8080/api/auth"
 
-    func registerUser(username: String, password: String, completion: @escaping (Result<UserResponse, Error>) -> Void) {
+    func registerUser(username: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
         guard let url = URL(string: "\(baseURL)/register") else {
             completion(.failure(NetworkingError.invalidURL))
             return
@@ -45,17 +41,19 @@ class AuthService {
                 }
 
                 guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    print("Error: Invalid response from server")
                     completion(.failure(NSError(domain: "Invalid response from server", code: 500, userInfo: nil)))
                     return
                 }
 
                 guard let data = data else {
+                    print("Error - Response Body: \(String(describing: data))")
                     completion(.failure(NSError(domain: "No data received", code: 500, userInfo: nil)))
                     return
                 }
 
                 do {
-                    let userResponse = try JSONDecoder().decode(UserResponse.self, from: data)
+                    let userResponse = try JSONDecoder().decode(User.self, from: data)
                     completion(.success(userResponse))
                 } catch {
                     completion(.failure(error))
@@ -68,7 +66,7 @@ class AuthService {
         }
     }
 
-    func loginUser(username: String, password: String, completion: @escaping (Result<UserResponse, Error>) -> Void) {
+    func loginUser(username: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
         guard let url = URL(string: "\(baseURL)/login") else {
             completion(.failure(NetworkingError.invalidURL))
             return

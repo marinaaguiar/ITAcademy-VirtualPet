@@ -155,6 +155,7 @@ struct NeedItemView: View {
 struct PetDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         PetDetailsView(viewModel: PetDetailsViewModel(pet: Pet(
+            id: UUID().uuidString,
             name: "Claudio",
             type: .lightGrayCat,
             imageName: "Pet-Claudio",

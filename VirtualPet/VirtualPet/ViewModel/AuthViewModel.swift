@@ -43,13 +43,15 @@ class AuthViewModel: ObservableObject {
         }
 
         authService.registerUser(username: username, password: password) { result in
-            switch result {
-            case .success:
-                self.resetFields()
-                self.navigateToHome = true
-            case .failure(let error):
-                self.alertMessage = "Failed to register: \(error.localizedDescription)"
-                self.showAlert = true
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self.resetFields()
+                    self.navigateToHome = true
+                case .failure(let error):
+                    self.alertMessage = "Failed to register: \(error.localizedDescription)"
+                    self.showAlert = true
+                }
             }
         }
     }
@@ -62,13 +64,15 @@ class AuthViewModel: ObservableObject {
         }
 
         authService.loginUser(username: username, password: password) { result in
-            switch result {
-            case .success:
-                self.resetFields()
-                self.navigateToHome = true
-            case .failure(let error):
-                self.alertMessage = "Failed to login: \(error.localizedDescription)"
-                self.showAlert = true
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self.resetFields()
+                    self.navigateToHome = true
+                case .failure(let error):
+                    self.alertMessage = "Failed to login: \(error.localizedDescription)"
+                    self.showAlert = true
+                }
             }
         }
     }

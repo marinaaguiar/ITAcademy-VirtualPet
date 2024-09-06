@@ -8,8 +8,8 @@
 import Foundation
 import SwiftUI
 
-struct Pet: Identifiable {
-    let id = UUID()
+struct Pet: Identifiable, Codable {
+    let id: String
     var name: String
     var type: PetType
     var imageName: String

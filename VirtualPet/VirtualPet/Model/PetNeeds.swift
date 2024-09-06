@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PetNeeds: String, CaseIterable {
+enum PetNeeds: String, CaseIterable, Codable {
     case full = "Full"
     case hydrated = "Hydrated"
     case loved = "Loved"

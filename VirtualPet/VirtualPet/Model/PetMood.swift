@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PetMood: String {
+enum PetMood: String, Codable {
     case happy = "Happy"
     case sad = "Sad"
     case excited = "Excited"

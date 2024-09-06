@@ -50,6 +50,13 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(viewModel: AuthViewModel(users: [User(username: "SampleUser", password: "*****")]))
+        LoginView(viewModel: AuthViewModel(users: [
+            User(
+                id: UUID().uuidString,
+                username: "SampleUser",
+                password: "*****",
+                pets: []
+            )
+        ]))
     }
 }

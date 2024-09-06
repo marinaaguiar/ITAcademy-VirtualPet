@@ -64,6 +64,6 @@ struct OnboardingView: View {
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingView(users: .constant([User(username: "SampleUser", password: "*****")]))
+        OnboardingView(users: .constant([User(id: UUID().uuidString, username: "SampleUser", password: "*****", pets: [])]))
     }
 }
