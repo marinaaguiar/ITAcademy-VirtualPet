@@ -9,70 +9,92 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var showCreatePetView = false
-
     @Binding var pets: [Pet]
 
+    // Reference to the AuthViewModel to call logout
+    @ObservedObject var authViewModel: AuthViewModel
+
     var body: some View {
-        VStack {
-            if pets.isEmpty {
-                Spacer()
-                Image("VirtualPetIconPng")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 150, height: 150)
-                    .padding(.top, 50)
 
-                Text("No pets created yet.")
-                    .font(.headline)
-                    .padding(.top, 20)
+        ZStack(alignment: .top) {
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color.mint.opacity(0.2),
+                    Color.white.opacity(0.8),
+                    Color.pink.opacity(0.2)]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
 
-                Spacer()
-                Button(action: {
-                    showCreatePetView = true
-                }) {
-                    Text("Create New Pet")
+            VStack {
+                if pets.isEmpty {
+                    Spacer()
+                    Image("VirtualPetIconPng")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 350, height: 350)
+                        .padding(.top, 50)
+
+                    Text("No pets created yet.")
                         .font(.headline)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.mint)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .padding(25)
-            } else {
-                List(pets) { pet in
-                    NavigationLink(destination: PetDetailsView(viewModel: PetDetailsViewModel(pet: pet))) {
-                        HStack {
-                            Image(pet.imageName)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
-                                .padding(.trailing, 10)
+                        .padding(.top, 20)
 
-                            VStack(alignment: .leading) {
-                                Text(pet.name)
-                                    .font(.headline)
-                                Text(pet.type.rawValue)
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
+                    Spacer()
+                    Button(action: {
+                        showCreatePetView = true
+                    }) {
+                        Text("Create New Pet")
+                            .font(.headline)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.mint)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .padding(25)
+                } else {
+                    List(pets) { pet in
+                        NavigationLink(destination: PetDetailsView(viewModel: PetDetailsViewModel(pet: pet))) {
+                            HStack {
+                                Image(pet.imageName)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(Circle())
+                                    .padding(.trailing, 10)
+
+                                VStack(alignment: .leading) {
+                                    Text(pet.name)
+                                        .font(.headline)
+                                    Text(pet.type.rawValue)
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                }
                             }
                         }
                     }
+                    .padding(.bottom, -10)
                 }
-                .padding(.bottom, -10)
+                Spacer()
             }
-            Spacer()
-        }
-        .navigationTitle("Virtual Pet")
-        .sheet(isPresented: $showCreatePetView) {
-            CreatePetView(viewModel: CreatePetViewModel(pets: pets), isPresented: $showCreatePetView)
+            .navigationTitle("Virtual Pet")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Log Out") {
+                        authViewModel.logOutUser() // Call the logout method
+                    }
+                }
+            }
+            .sheet(isPresented: $showCreatePetView) {
+                CreatePetView(viewModel: CreatePetViewModel(pets: pets), isPresented: $showCreatePetView)
+            }
         }
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(pets: .constant([]))
+        HomeView(pets: .constant([]), authViewModel: AuthViewModel(users: []))
     }
 }

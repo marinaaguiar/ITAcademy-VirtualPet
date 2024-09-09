@@ -11,7 +11,19 @@ struct PetDetailsView: View {
     @StateObject var viewModel: PetDetailsViewModel
 
     var body: some View {
+
+
         ZStack(alignment: .top) {
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color.mint.opacity(0.2),
+                        Color.white.opacity(0.3),
+                        Color.pink.opacity(0.5)]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+
 
             LottieView(filename: viewModel.pet.type.getLottieFileName())
                 .frame(height: 500)

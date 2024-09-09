@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     @ObservedObject var viewModel: AuthViewModel
-    @Environment(\.presentationMode) var presentationMode
+    var onSuccess: () -> Void // Pass this closure to handle navigation on success
 
     var body: some View {
         VStack {
@@ -26,7 +26,7 @@ struct LoginView: View {
                     Button(action: {
                         viewModel.loginUser()
                         if viewModel.navigateToHome {
-                            presentationMode.wrappedValue.dismiss()
+                            onSuccess() // Call success closure to trigger navigation
                         }
                     }) {
                         Text("Login")
@@ -57,6 +57,9 @@ struct LoginView_Previews: PreviewProvider {
                 password: "*****",
                 pets: []
             )
-        ]))
+        ]), onSuccess: {
+            // Placeholder closure for the preview
+            print("Login successful!")
+        })
     }
 }

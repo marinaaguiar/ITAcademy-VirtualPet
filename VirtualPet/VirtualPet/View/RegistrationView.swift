@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RegistrationView: View {
     @ObservedObject var viewModel: AuthViewModel
+    var onSuccess: () -> Void // Pass this closure to handle navigation on success
 
     var body: some View {
         Form {
@@ -25,6 +26,9 @@ struct RegistrationView: View {
             Section {
                 Button(action: {
                     viewModel.registerUser()
+                    if viewModel.navigateToHome {
+                        onSuccess() // Call success closure to trigger navigation
+                    }
                 }) {
                     Text("Register")
                         .font(.headline)
@@ -47,7 +51,13 @@ struct RegistrationView: View {
 struct RegistrationView_Previews: PreviewProvider {
     static var previews: some View {
         RegistrationView(
-            viewModel: AuthViewModel(users: [User(id: UUID().uuidString, username: "Marina", password: "***", pets: [])])
+            viewModel: AuthViewModel(users: [
+                User(id: UUID().uuidString, username: "Marina", password: "***", pets: [])
+            ]),
+            onSuccess: {
+                // Placeholder closure for the preview
+                print("Registration successful!")
+            }
         )
     }
 }
