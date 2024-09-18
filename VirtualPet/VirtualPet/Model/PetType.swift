@@ -9,10 +9,10 @@ import Foundation
 import SwiftUI
 
 enum PetType: String, CaseIterable, Identifiable, Codable {
-    case orangeCat = "Orange Cat"
-    case blackCat = "Black Cat"
-    case lightGrayCat = "Light Gray Cat"
-    case darkGrayCat = "Dark Gray Cat"
+    case orangeCat = "ORANGE_CAT"
+    case blackCat = "BLACK_CAT"
+    case lightGrayCat = "LIGHT_GRAY_CAT"
+    case darkGrayCat = "DARK_GRAY_CAT"
 
     var id: String { self.rawValue }
 

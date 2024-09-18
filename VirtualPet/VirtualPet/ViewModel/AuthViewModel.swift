@@ -23,21 +23,9 @@ class AuthViewModel: ObservableObject {
         self.users = users
     }
 
-    func registerUser() {
-        guard !username.isEmpty else {
-            alertMessage = "Username cannot be empty"
-            showAlert = true
-            return
-        }
-
-        guard password == confirmPassword else {
-            alertMessage = "Passwords do not match"
-            showAlert = true
-            return
-        }
-
-        guard password.count >= 6 else {
-            alertMessage = "Password must be at least 6 characters"
+    func registerUser(onSuccess: @escaping () -> Void) {
+        guard !username.isEmpty, !password.isEmpty, password == confirmPassword else {
+            alertMessage = "Invalid input or passwords do not match"
             showAlert = true
             return
         }
@@ -46,8 +34,7 @@ class AuthViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success:
-                    self.resetFields()
-                    self.navigateToHome = true
+                    onSuccess()
                 case .failure(let errorResponse):
                     self.alertMessage = errorResponse.message
                     self.showAlert = true
@@ -56,7 +43,7 @@ class AuthViewModel: ObservableObject {
         }
     }
 
-    func loginUser() {
+    func loginUser(onSuccess: @escaping () -> Void) {
         guard !username.isEmpty && !password.isEmpty else {
             alertMessage = "Username or Password cannot be empty"
             showAlert = true
@@ -67,14 +54,20 @@ class AuthViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success:
-                    self.resetFields()
                     self.navigateToHome = true
+                    onSuccess()
                 case .failure(let errorResponse):
                     self.alertMessage = errorResponse.message
                     self.showAlert = true
                 }
             }
         }
+    }
+
+    func logOutUser() {
+        UserDefaults.standard.removeObject(forKey: "authToken")
+        resetFields()
+        navigateToHome = false
     }
 
     private func resetFields() {

@@ -29,6 +29,8 @@
 		9C9BF5342C888B68001CF73C /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9BF5332C888B68001CF73C /* NetworkingService.swift */; };
 		9C9BF5362C889075001CF73C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9BF5352C889075001CF73C /* AuthService.swift */; };
 		9CCDF4732C8B51890013133F /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCDF4722C8B51890013133F /* ErrorResponse.swift */; };
+		9CCDF4752C8F14A60013133F /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCDF4742C8F14A60013133F /* UserService.swift */; };
+		9CCDF4772C8F32E10013133F /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCDF4762C8F32E10013133F /* UserResponse.swift */; };
 		9CF34C5B2C8715ED00114E72 /* Cat-LightGray.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CF34C5A2C8715ED00114E72 /* Cat-LightGray.json */; };
 		9CF34C5D2C87163700114E72 /* Cat-Black.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CF34C5C2C87163700114E72 /* Cat-Black.json */; };
 		9CF34C5F2C87165600114E72 /* Cat-Orange.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CF34C5E2C87165600114E72 /* Cat-Orange.json */; };
@@ -82,6 +84,8 @@
 		9C9BF5352C889075001CF73C /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		9C9BF5372C88B00D001CF73C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9CCDF4722C8B51890013133F /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
+		9CCDF4742C8F14A60013133F /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		9CCDF4762C8F32E10013133F /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
 		9CF34C5A2C8715ED00114E72 /* Cat-LightGray.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Cat-LightGray.json"; sourceTree = "<group>"; };
 		9CF34C5C2C87163700114E72 /* Cat-Black.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Cat-Black.json"; sourceTree = "<group>"; };
 		9CF34C5E2C87165600114E72 /* Cat-Orange.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Cat-Orange.json"; sourceTree = "<group>"; };
@@ -206,6 +210,7 @@
 				9C05AD2F2C81C9FF009D027D /* PetMood.swift */,
 				9CF34C622C8721D900114E72 /* PetNeeds.swift */,
 				9CCDF4722C8B51890013133F /* ErrorResponse.swift */,
+				9CCDF4762C8F32E10013133F /* UserResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -215,6 +220,7 @@
 			children = (
 				9C9BF5332C888B68001CF73C /* NetworkingService.swift */,
 				9C9BF5352C889075001CF73C /* AuthService.swift */,
+				9CCDF4742C8F14A60013133F /* UserService.swift */,
 			);
 			path = NetworkingService;
 			sourceTree = "<group>";
@@ -383,8 +389,10 @@
 				9C05AD372C860743009D027D /* LottieView.swift in Sources */,
 				9CF34C632C8721D900114E72 /* PetNeeds.swift in Sources */,
 				9C15F5A72C7F48B400D3DFD4 /* VirtualPetApp.swift in Sources */,
+				9CCDF4752C8F14A60013133F /* UserService.swift in Sources */,
 				9C15F5E12C7F791200D3DFD4 /* LoginView.swift in Sources */,
 				9CCDF4732C8B51890013133F /* ErrorResponse.swift in Sources */,
+				9CCDF4772C8F32E10013133F /* UserResponse.swift in Sources */,
 				9CF34C692C87427C00114E72 /* CreatePetViewModel.swift in Sources */,
 				9C15F5D12C7F511A00D3DFD4 /* CreatePetView.swift in Sources */,
 				9CF34C652C873C9100114E72 /* PetDetailsViewModel.swift in Sources */,

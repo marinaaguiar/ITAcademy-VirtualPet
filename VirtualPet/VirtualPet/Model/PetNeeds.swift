@@ -8,12 +8,12 @@
 import Foundation
 
 enum PetNeeds: String, CaseIterable, Codable {
-    case full = "Full"
-    case hydrated = "Hydrated"
-    case loved = "Loved"
-    case hungry = "Hungry"
-    case thirsty = "Thirsty"
-    case care = "Care"
+    case full = "FULL"
+    case hydrated = "HYDRATED"
+    case loved = "LOVED"
+    case hungry = "HUNGRY"
+    case thirsty = "THIRSTY"
+    case care = "CARE"
 
     func opposite() -> PetNeeds? {
         switch self {

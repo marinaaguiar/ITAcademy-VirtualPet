@@ -11,7 +11,7 @@ class AuthService {
     private let networkingService = NetworkingService()
     private let baseURL = "http://127.0.0.1:8080/api/auth"
 
-    func registerUser(username: String, password: String, completion: @escaping (Result<User, ErrorResponse>) -> Void) {
+    func registerUser(username: String, password: String, completion: @escaping (Result<UserResponse, ErrorResponse>) -> Void) {
         guard let url = URL(string: "\(baseURL)/register") else {
             let errorResponse = ErrorResponse(message: "Invalid URL", statusCode: 400)
             completion(.failure(errorResponse))
@@ -25,14 +25,65 @@ class AuthService {
 
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: body)
-            networkingService.postRequest(url: url, body: jsonData, completion: completion)
+
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = jsonData
+
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    let errorResponse = ErrorResponse(message: error.localizedDescription, statusCode: 500)
+                    completion(.failure(errorResponse))
+                    return
+                }
+
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    let errorResponse = ErrorResponse(message: "Invalid response from server", statusCode: 500)
+                    completion(.failure(errorResponse))
+                    return
+                }
+
+                if httpResponse.statusCode != 200 {
+                    // Try to decode the error response if the status code isn't 200
+                    if let data = data {
+                        do {
+                            let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
+                            completion(.failure(errorResponse))
+                        } catch {
+                            let errorResponse = ErrorResponse(message: "Unknown error occurred", statusCode: httpResponse.statusCode)
+                            completion(.failure(errorResponse))
+                        }
+                    } else {
+                        let errorResponse = ErrorResponse(message: "No error data received", statusCode: httpResponse.statusCode)
+                        completion(.failure(errorResponse))
+                    }
+                    return
+                }
+
+                guard let data = data else {
+                    let errorResponse = ErrorResponse(message: "No data received", statusCode: 500)
+                    completion(.failure(errorResponse))
+                    return
+                }
+
+                do {
+                    let userResponse = try JSONDecoder().decode(UserResponse.self, from: data)
+                    completion(.success(userResponse))
+                } catch {
+                    let errorResponse = ErrorResponse(message: "Failed to decode user data", statusCode: 500)
+                    completion(.failure(errorResponse))
+                }
+            }
+
+            task.resume()
         } catch {
             let errorResponse = ErrorResponse(message: "Request creation failed", statusCode: 400)
             completion(.failure(errorResponse))
         }
     }
 
-    func loginUser(username: String, password: String, completion: @escaping (Result<User, ErrorResponse>) -> Void) {
+    func loginUser(username: String, password: String, completion: @escaping (Result<UserResponse, ErrorResponse>) -> Void) {
         guard let url = URL(string: "\(baseURL)/login") else {
             let errorResponse = ErrorResponse(message: "Invalid URL", statusCode: 400)
             completion(.failure(errorResponse))
@@ -45,10 +96,20 @@ class AuthService {
         ]
 
         do {
-            let jsonData = try JSONSerialization.data(withJSONObject: body)
-            networkingService.postRequest(url: url, body: jsonData, completion: completion)
+            let bodyData = try JSONSerialization.data(withJSONObject: body, options: [])
+
+            networkingService.postRequest(url: url, body: bodyData, addAuthToken: false) { (result: Result<UserResponse, ErrorResponse>) in
+                switch result {
+                case .success(let userResponse):
+                    // Store the token in UserDefaults
+                    UserDefaults.standard.set(userResponse.token, forKey: "authToken")
+                    completion(.success(userResponse))
+                case .failure(let errorResponse):
+                    completion(.failure(errorResponse))
+                }
+            }
         } catch {
-            let errorResponse = ErrorResponse(message: "Request creation failed", statusCode: 400)
+            let errorResponse = ErrorResponse(message: "Failed to create request body", statusCode: 400)
             completion(.failure(errorResponse))
         }
     }

@@ -10,8 +10,6 @@ import SwiftUI
 struct HomeView: View {
     @State private var showCreatePetView = false
     @Binding var pets: [Pet]
-
-    // Reference to the AuthViewModel to call logout
     @ObservedObject var authViewModel: AuthViewModel
 
     var body: some View {
@@ -57,7 +55,7 @@ struct HomeView: View {
                     List(pets) { pet in
                         NavigationLink(destination: PetDetailsView(viewModel: PetDetailsViewModel(pet: pet))) {
                             HStack {
-                                Image(pet.imageName)
+                                Image("Pet-Claudio")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 50, height: 50)
@@ -87,7 +85,7 @@ struct HomeView: View {
                 }
             }
             .sheet(isPresented: $showCreatePetView) {
-                CreatePetView(viewModel: CreatePetViewModel(pets: pets), isPresented: $showCreatePetView)
+                CreatePetView(viewModel: CreatePetViewModel(pets: pets, userId: "userId"), isPresented: $showCreatePetView)
             }
         }
     }

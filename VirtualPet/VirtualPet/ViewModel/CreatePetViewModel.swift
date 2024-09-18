@@ -14,24 +14,42 @@ class CreatePetViewModel: ObservableObject {
     @Published var mood: PetMood = .happy
     @Published var energyLevel: Int = 100
     @Published var needs: PetNeeds = .loved
+    @Published var showAlert: Bool = false
+    @Published var alertMessage: String = ""
 
     @Published var pets: [Pet]
+    private let userService = UserService()
+    private let userId: String
 
-    init(pets: [Pet]) {
+    init(pets: [Pet], userId: String) {
         self.pets = pets
+        self.userId = userId
     }
 
     func createPet() {
         let newPet = Pet(
-            id: UUID().uuidString, 
+            id: UUID().uuidString,
             name: petName,
-            type: selectedCreature,
-            imageName: "Pet-Claudio",
             uniqueCharacteristic: uniqueCharacteristic,
-            mood: mood,
             energyLevel: energyLevel,
+            type: selectedCreature,
+//            imageName: "Pet-Claudio",
+            mood: mood,
             needs: [needs]
         )
-        pets.append(newPet)
+
+        userService.addPetToUser(userId: userId, pet: newPet) { result in
+            switch result {
+            case .success(let updatedUser):
+                DispatchQueue.main.async {
+                    guard let newPets = updatedUser.pets else { return }
+                    self.pets = newPets
+                }
+            case .failure(let errorResponse):
+                self.alertMessage = errorResponse.message
+                self.showAlert = true
+                print("Error creating pet: \(errorResponse.message)")
+            }
+        }
     }
 }

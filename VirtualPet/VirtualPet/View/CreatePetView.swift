@@ -76,6 +76,6 @@ struct CreatePetView: View {
 
 struct CreatePetView_Previews: PreviewProvider {
     static var previews: some View {
-        CreatePetView(viewModel: CreatePetViewModel(pets: []), isPresented: .constant(true))
+        CreatePetView(viewModel: CreatePetViewModel(pets: [], userId: "1203981"), isPresented: .constant(true))
     }
 }

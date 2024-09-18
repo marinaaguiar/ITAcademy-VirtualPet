@@ -24,17 +24,27 @@ class NetworkingService {
 
     private var sharedSession: URLSession { URLSession.shared }
 
+    private var authToken: String? {
+        return UserDefaults.standard.string(forKey: "authToken")
+    }
+
     func request<T: Decodable>(
         url: URL,
         method: HTTPMethod,
         body: Data? = nil,
+        addAuthToken: Bool = false,
         completion: @escaping(Result<T, ErrorResponse>) -> Void
     ) {
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
+
         if let body = body {
             request.httpBody = body
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        }
+
+        if addAuthToken, let token = authToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
 
         let task = sharedSession.dataTask(with: request) { data, response, error in
@@ -43,6 +53,8 @@ class NetworkingService {
                     let errorResponse = ErrorResponse(message: error.localizedDescription, statusCode: 500)
                     completion(.failure(errorResponse))
                 }
+
+                print(error.localizedDescription)
                 return
             }
 
@@ -100,14 +112,14 @@ class NetworkingService {
     }
 
     func getRequest<T: Decodable>(url: URL, completion: @escaping(Result<T, ErrorResponse>) -> Void) {
-        request(url: url, method: .get, completion: completion)
+        request(url: url, method: .get, addAuthToken: true, completion: completion)
     }
 
-    func postRequest<T: Decodable>(url: URL, body: Data, completion: @escaping(Result<T, ErrorResponse>) -> Void) {
-        request(url: url, method: .post, body: body, completion: completion)
+    func postRequest<T: Decodable>(url: URL, body: Data, addAuthToken: Bool = true, completion: @escaping(Result<T, ErrorResponse>) -> Void) {
+        request(url: url, method: .post, body: body, addAuthToken: addAuthToken, completion: completion)
     }
 
-    func putRequest<T: Decodable>(url: URL, body: Data, completion: @escaping(Result<T, ErrorResponse>) -> Void) {
-        request(url: url, method: .put, body: body, completion: completion)
+    func putRequest<T: Decodable>(url: URL, body: Data, addAuthToken: Bool = true, completion: @escaping(Result<T, ErrorResponse>) -> Void) {
+        request(url: url, method: .put, body: body, addAuthToken: addAuthToken, completion: completion)
     }
 }

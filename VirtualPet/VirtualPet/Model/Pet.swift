@@ -11,10 +11,9 @@ import SwiftUI
 struct Pet: Identifiable, Codable {
     let id: String
     var name: String
-    var type: PetType
-    var imageName: String
     var uniqueCharacteristic: String
-    var mood: PetMood = .happy
-    var energyLevel: Int = 50
-    var needs: [PetNeeds] = [.full, .loved]
+    var energyLevel: Int
+    var type: PetType
+    var mood: PetMood
+    var needs: [PetNeeds]
 }

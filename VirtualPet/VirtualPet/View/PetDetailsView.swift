@@ -95,7 +95,7 @@ struct PetDetailsView: View {
                 .padding(24)
                 .background(Color.white)
                 .cornerRadius(20)
-                .shadow(color: Color.gray.opacity(0.5),radius: 50)
+                .shadow(color: Color.white.opacity(0.5),radius: 50)
                 .edgesIgnoringSafeArea(.bottom)
             }
             .padding(.top, 350)
@@ -169,11 +169,11 @@ struct PetDetailsView_Previews: PreviewProvider {
         PetDetailsView(viewModel: PetDetailsViewModel(pet: Pet(
             id: UUID().uuidString,
             name: "Claudio",
-            type: .lightGrayCat,
-            imageName: "Pet-Claudio",
             uniqueCharacteristic: "Fluffy tail",
-            mood: .happy,
             energyLevel: 80,
+            type: .orangeCat,
+//            imageName: "Pet-Claudio",
+            mood: .happy,
             needs: [.full, .loved]
         )))
     }

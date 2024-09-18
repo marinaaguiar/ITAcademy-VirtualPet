@@ -8,10 +8,10 @@
 import Foundation
 
 enum PetMood: String, Codable {
-    case happy = "Happy"
-    case sad = "Sad"
-    case excited = "Excited"
-    case tired = "Tired"
+    case happy = "HAPPY"
+    case sad = "SAD"
+    case excited = "EXCITED"
+    case tired = "TIRED"
 
     func getEmoji() -> String {
         switch self {
