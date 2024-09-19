@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     @ObservedObject var viewModel: AuthViewModel
+    @State private var showHomeView = false
     var onSuccess: () -> Void
 
     var body: some View {
@@ -25,7 +26,7 @@ struct LoginView: View {
                 Section {
                     Button(action: {
                         viewModel.loginUser {
-                            onSuccess()
+                            showHomeView = true
                         }
                     }) {
                         Text("Login")
@@ -44,6 +45,14 @@ struct LoginView: View {
         .alert(isPresented: $viewModel.showAlert) {
             Alert(title: Text("Login Error"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
         }
+        .background(
+            NavigationLink(
+                destination: HomeView(homeViewModel: HomeViewModel(), authViewModel: viewModel),
+                isActive: $showHomeView
+            ) {
+                EmptyView()
+            }
+        )
     }
 }
 
