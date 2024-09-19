@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Pet: Identifiable, Codable {
+struct Pet: Identifiable, Codable, Equatable {
     let id: String
     var name: String
     var uniqueCharacteristic: String
