@@ -24,9 +24,9 @@ struct LoginView: View {
 
                 Section {
                     Button(action: {
-                            viewModel.loginUser {
-                                onSuccess()
-                            }
+                        viewModel.loginUser {
+                            onSuccess()
+                        }
                     }) {
                         Text("Login")
                             .font(.headline)

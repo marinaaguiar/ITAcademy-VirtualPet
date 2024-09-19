@@ -11,8 +11,7 @@ struct OnboardingView: View {
     @Binding var users: [User]
     @State private var pets: [Pet] = []
     @StateObject private var authViewModel: AuthViewModel
-
-    @State private var navigateToHome = false // Control navigation here
+    @State private var navigateToHome = false
 
     init(users: Binding<[User]>) {
         _users = users
@@ -21,7 +20,6 @@ struct OnboardingView: View {
 
     var body: some View {
         NavigationStack {
-
             ZStack {
                 LinearGradient(
                     gradient: Gradient(colors: [
@@ -42,17 +40,23 @@ struct OnboardingView: View {
 
                     Spacer()
 
-                    // Navigation to Home when user logs in or registers
-                    NavigationLink(destination: HomeView(pets: $pets, authViewModel: AuthViewModel(users: users))
+                    NavigationLink(
+                        destination: HomeView(
+                            homeViewModel: HomeViewModel(),
+                            authViewModel: authViewModel
+                        )
                         .navigationBarBackButtonHidden(true)
                         .navigationBarHidden(true),
-                                   isActive: $navigateToHome) {
+                        isActive: $navigateToHome
+                    ) {
                         EmptyView()
                     }
 
-                    NavigationLink(destination: RegistrationView(viewModel: authViewModel, onSuccess: {
-                        navigateToHome = true // Trigger navigation on success
-                    })) {
+                    NavigationLink(
+                        destination: RegistrationView(viewModel: authViewModel, onSuccess: {
+                            navigateToHome = true
+                        })
+                    ) {
                         Text("Register")
                             .font(.headline)
                             .padding()
@@ -63,9 +67,14 @@ struct OnboardingView: View {
                     }
                     .padding(.horizontal)
 
-                    NavigationLink(destination: LoginView(viewModel: authViewModel, onSuccess: {
-                        navigateToHome = true // Trigger navigation on success
-                    })) {
+                    NavigationLink(
+                        destination:
+                            LoginView(
+                                viewModel: authViewModel,
+                                onSuccess: {
+                            navigateToHome = true
+                        })
+                    ) {
                         Text("Login")
                             .font(.headline)
                             .padding()
