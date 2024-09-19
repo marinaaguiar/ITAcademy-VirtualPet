@@ -9,11 +9,13 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var showCreatePetView = false
-    @Binding var pets: [Pet]
+    @State private var displayedPets: [Pet] = [
+        Pet(id: "343234", name: "Claudio", uniqueCharacteristic: "fluffy", energyLevel: 80, type: .blackCat, mood: .excited, needs: [.care, .full]
+    )]
+    @ObservedObject var homeViewModel: HomeViewModel
     @ObservedObject var authViewModel: AuthViewModel
 
     var body: some View {
-
         ZStack(alignment: .top) {
             LinearGradient(
                 gradient: Gradient(colors: [
@@ -25,8 +27,14 @@ struct HomeView: View {
             )
             .ignoresSafeArea()
 
+
             VStack {
-                if pets.isEmpty {
+                if homeViewModel.isLoading {
+                    Spacer()
+                    ProgressView("Loading Pets...")
+                        .progressViewStyle(CircularProgressViewStyle())
+                    Spacer()
+                } else if displayedPets.isEmpty {
                     Spacer()
                     Image("VirtualPetIconPng")
                         .resizable()
@@ -52,10 +60,10 @@ struct HomeView: View {
                     }
                     .padding(25)
                 } else {
-                    List(pets) { pet in
+                    List(displayedPets) { pet in
                         NavigationLink(destination: PetDetailsView(viewModel: PetDetailsViewModel(pet: pet))) {
                             HStack {
-                                Image("Pet-Claudio")
+                                Image("\(pet.type.rawValue)")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 50, height: 50)
@@ -80,19 +88,32 @@ struct HomeView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Log Out") {
-                        authViewModel.logOutUser() // Call the logout method
+                        authViewModel.logOutUser()
                     }
                 }
             }
             .sheet(isPresented: $showCreatePetView) {
-                CreatePetView(viewModel: CreatePetViewModel(pets: pets, userId: "userId"), isPresented: $showCreatePetView)
+                CreatePetView(viewModel: CreatePetViewModel(pets: homeViewModel.pets, userId: "userId"), isPresented: $showCreatePetView)
             }
+        }
+        .onAppear {
+            DispatchQueue.main.async {
+                if let user = authViewModel.loggedInUser, let token = authViewModel.authToken {
+                    print("User: \(user.id), Token: \(token)")
+                    homeViewModel.fetchUserPets(userId: user.id, token: token)
+                } else {
+                    print("User or token is missing!")
+                }
+            }
+        }
+        .onChange(of: homeViewModel.pets) { newPets in
+            displayedPets = newPets
         }
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(pets: .constant([]), authViewModel: AuthViewModel(users: []))
+        HomeView(homeViewModel: HomeViewModel(), authViewModel: AuthViewModel(users: []))
     }
 }
