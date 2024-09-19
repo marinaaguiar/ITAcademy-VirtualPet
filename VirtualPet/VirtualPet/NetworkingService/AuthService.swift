@@ -11,7 +11,7 @@ class AuthService {
     private let networkingService = NetworkingService()
     private let baseURL = "http://127.0.0.1:8080/api/auth"
 
-    func registerUser(username: String, password: String, completion: @escaping (Result<UserResponse, ErrorResponse>) -> Void) {
+    func registerUser(username: String, password: String, completion: @escaping (Result<LoginResponse, ErrorResponse>) -> Void) {
         guard let url = URL(string: "\(baseURL)/register") else {
             let errorResponse = ErrorResponse(message: "Invalid URL", statusCode: 400)
             completion(.failure(errorResponse))
@@ -45,7 +45,6 @@ class AuthService {
                 }
 
                 if httpResponse.statusCode != 200 {
-                    // Try to decode the error response if the status code isn't 200
                     if let data = data {
                         do {
                             let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
@@ -68,7 +67,7 @@ class AuthService {
                 }
 
                 do {
-                    let userResponse = try JSONDecoder().decode(UserResponse.self, from: data)
+                    let userResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
                     completion(.success(userResponse))
                 } catch {
                     let errorResponse = ErrorResponse(message: "Failed to decode user data", statusCode: 500)
@@ -83,7 +82,7 @@ class AuthService {
         }
     }
 
-    func loginUser(username: String, password: String, completion: @escaping (Result<UserResponse, ErrorResponse>) -> Void) {
+    func loginUser(username: String, password: String, completion: @escaping (Result<LoginResponse, ErrorResponse>) -> Void) {
         guard let url = URL(string: "\(baseURL)/login") else {
             let errorResponse = ErrorResponse(message: "Invalid URL", statusCode: 400)
             completion(.failure(errorResponse))
@@ -98,10 +97,9 @@ class AuthService {
         do {
             let bodyData = try JSONSerialization.data(withJSONObject: body, options: [])
 
-            networkingService.postRequest(url: url, body: bodyData, addAuthToken: false) { (result: Result<UserResponse, ErrorResponse>) in
+            networkingService.postRequest(url: url, body: bodyData, addAuthToken: false) { (result: Result<LoginResponse, ErrorResponse>) in
                 switch result {
                 case .success(let userResponse):
-                    // Store the token in UserDefaults
                     UserDefaults.standard.set(userResponse.token, forKey: "authToken")
                     completion(.success(userResponse))
                 case .failure(let errorResponse):
