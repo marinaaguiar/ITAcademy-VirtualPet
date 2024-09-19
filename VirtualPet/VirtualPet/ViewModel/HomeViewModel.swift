@@ -16,7 +16,7 @@ class HomeViewModel: ObservableObject {
     private let userService = UserService()
 
     func fetchUserPets(userId: String, token: String) {
-        print("Fetching pets for user ID: \(userId)") // Log when the fetch starts
+        print("Fetching pets for user ID: \(userId)")
         isLoading = true
 
         userService.getUserPets(userId: userId, token: token) { [weak self] result in
@@ -26,10 +26,10 @@ class HomeViewModel: ObservableObject {
 
                 switch result {
                 case .success(let pets):
-                    print("Fetched pets: \(pets)") // Log the pets received from the server
+                    print("Fetched pets: \(pets)")
                     self.pets = pets
                 case .failure(let error):
-                    print("Error fetching pets: \(error.message)") // Log the error if the request fails
+                    print("Error fetching pets: \(error.message)")
                     self.errorMessage = error.message
                 }
             }
