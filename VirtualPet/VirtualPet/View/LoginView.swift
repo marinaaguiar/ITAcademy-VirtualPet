@@ -49,7 +49,8 @@ struct LoginView: View {
         }
         .background(
             NavigationLink(
-                destination: HomeView(homeViewModel: homeViewModel, authViewModel: viewModel),
+                destination: HomeView(homeViewModel: homeViewModel, authViewModel: viewModel)
+                    .navigationBarBackButtonHidden(true), // Only hide back button
                 isActive: $showHomeView
             ) {
                 EmptyView()

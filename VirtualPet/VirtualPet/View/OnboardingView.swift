@@ -42,10 +42,11 @@ struct OnboardingView: View {
                     Spacer()
 
                     NavigationLink(destination: HomeView(
-                        homeViewModel: HomeViewModel(), authViewModel: AuthViewModel(users: users))
-                        .navigationBarBackButtonHidden(true)
-                        .navigationBarHidden(true),
-                                   isActive: $navigateToHome) {
+                        homeViewModel: HomeViewModel(),
+                        authViewModel: AuthViewModel(users: users))
+                        .navigationBarBackButtonHidden(true)  // Ensure back button is hidden
+                        .navigationBarHidden(true),           // Optionally hide the nav bar
+                        isActive: $navigateToHome) {
                         EmptyView()
                     }
 

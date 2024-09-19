@@ -11,8 +11,7 @@ struct PetDetailsView: View {
     @StateObject var viewModel: PetDetailsViewModel
 
     var body: some View {
-
-
+        
         ZStack(alignment: .top) {
                 LinearGradient(
                     gradient: Gradient(colors: [
@@ -171,7 +170,7 @@ struct PetDetailsView_Previews: PreviewProvider {
             name: "Claudio",
             uniqueCharacteristic: "Fluffy tail",
             energyLevel: 80,
-            type: .orangeCat,
+            type: .lightGrayCat,
 //            imageName: "Pet-Claudio",
             mood: .happy,
             needs: [.full, .loved]

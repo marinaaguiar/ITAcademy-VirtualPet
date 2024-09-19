@@ -34,36 +34,6 @@
             endingLineNumber = "45"
             landmarkName = "createPet()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "FDAD1A9F-8ADE-478D-95FF-937FAB00357D - 955ba5f719da624d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;VirtualPet.User, VirtualPet.ErrorResponse&gt;) -&gt; () in VirtualPet.CreatePetViewModel.createPet() -&gt; ()"
-                  moduleName = "VirtualPet.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marina/Developer/ITAcademy-VirtualPet/VirtualPet/VirtualPet/ViewModel/CreatePetViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "45"
-                  endingLineNumber = "45">
-               </Location>
-               <Location
-                  uuid = "FDAD1A9F-8ADE-478D-95FF-937FAB00357D - 955ba5f719da624d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;VirtualPet.User, VirtualPet.ErrorResponse&gt;) -&gt; () in VirtualPet.CreatePetViewModel.createPet() -&gt; ()"
-                  moduleName = "VirtualPet.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marina/Developer/ITAcademy-VirtualPet/VirtualPet/VirtualPet/ViewModel/CreatePetViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "45"
-                  endingLineNumber = "45">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -240,36 +210,6 @@
             endingLineNumber = "105"
             landmarkName = "request(url:method:body:addAuthToken:completion:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "51B9B57F-2A50-4246-ACFC-271D5EFC2018 - a78eeb410aff5e4d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in VirtualPet.NetworkingService.request&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(url: Foundation.URL, method: VirtualPet.HTTPMethod, body: Swift.Optional&lt;Foundation.Data&gt;, addAuthToken: Swift.Bool, completion: (Swift.Result&lt;&#x3c4;_0_0, VirtualPet.ErrorResponse&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "VirtualPet.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marina/Developer/ITAcademy-VirtualPet/VirtualPet/VirtualPet/NetworkingService/NetworkingService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "105"
-                  endingLineNumber = "105">
-               </Location>
-               <Location
-                  uuid = "51B9B57F-2A50-4246-ACFC-271D5EFC2018 - 4467031b869fc1f4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #8 @Swift.MainActor () -&gt; () in closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in VirtualPet.NetworkingService.request&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(url: Foundation.URL, method: VirtualPet.HTTPMethod, body: Swift.Optional&lt;Foundation.Data&gt;, addAuthToken: Swift.Bool, completion: (Swift.Result&lt;&#x3c4;_0_0, VirtualPet.ErrorResponse&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "VirtualPet.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marina/Developer/ITAcademy-VirtualPet/VirtualPet/VirtualPet/NetworkingService/NetworkingService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "105"
-                  endingLineNumber = "105">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -302,36 +242,6 @@
             endingLineNumber = "20"
             landmarkName = "getUserPets(userId:token:completion:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "D54F68E0-A733-42CF-AF2C-04A003972AB4 - ebf84c3b06a4d8b6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "VirtualPet.UserService.getUserPets(userId: Swift.String, token: Swift.String, completion: (Swift.Result&lt;Swift.Array&lt;VirtualPet.Pet&gt;, VirtualPet.ErrorResponse&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "VirtualPet.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marina/Developer/ITAcademy-VirtualPet/VirtualPet/VirtualPet/NetworkingService/UserService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "20"
-                  endingLineNumber = "20">
-               </Location>
-               <Location
-                  uuid = "D54F68E0-A733-42CF-AF2C-04A003972AB4 - 198186a6a6277bab"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;VirtualPet.Pet&gt;, VirtualPet.ErrorResponse&gt;) -&gt; () in VirtualPet.UserService.getUserPets(userId: Swift.String, token: Swift.String, completion: (Swift.Result&lt;Swift.Array&lt;VirtualPet.Pet&gt;, VirtualPet.ErrorResponse&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "VirtualPet.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marina/Developer/ITAcademy-VirtualPet/VirtualPet/VirtualPet/NetworkingService/UserService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "20"
-                  endingLineNumber = "20">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

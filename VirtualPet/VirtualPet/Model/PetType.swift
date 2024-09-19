@@ -16,6 +16,15 @@ enum PetType: String, CaseIterable, Identifiable, Codable {
 
     var id: String { self.rawValue }
 
+    func getString() -> String {
+        switch self {
+        case .orangeCat: return "Orange Cat"
+        case .blackCat: return "Black Cat"
+        case .lightGrayCat: return "Light Gray Cat"
+        case .darkGrayCat: return "DarkGray Cat"
+        }
+    }
+
     func getLottieFileName() -> String {
         switch self {
         case .orangeCat: return "Cat-Orange"
