@@ -16,6 +16,8 @@ class AuthViewModel: ObservableObject {
     @Published var alertMessage: String = ""
     @Published var navigateToHome: Bool = false
     @Published var users: [User] = []
+    @Published var loggedInUser: User? = nil
+    @Published var authToken: String? = nil
 
     private let authService = AuthService()
 
@@ -53,7 +55,9 @@ class AuthViewModel: ObservableObject {
         authService.loginUser(username: username, password: password) { result in
             DispatchQueue.main.async {
                 switch result {
-                case .success:
+                case .success(let response):
+                    self.loggedInUser = response.user
+                    self.authToken = response.token
                     self.navigateToHome = true
                     onSuccess()
                 case .failure(let errorResponse):
@@ -74,5 +78,7 @@ class AuthViewModel: ObservableObject {
         username = ""
         password = ""
         confirmPassword = ""
+        loggedInUser = nil
+        authToken = nil
     }
 }
