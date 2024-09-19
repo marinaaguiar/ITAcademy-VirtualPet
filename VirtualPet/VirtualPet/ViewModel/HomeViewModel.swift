@@ -11,7 +11,7 @@ import Combine
 class HomeViewModel: ObservableObject {
     @Published var pets: [Pet] = []
     @Published var errorMessage: String? = nil
-    @Published var isLoading: Bool = false // Track loading state
+    @Published var isLoading: Bool = false
 
     private let userService = UserService()
 
@@ -26,7 +26,6 @@ class HomeViewModel: ObservableObject {
 
                 switch result {
                 case .success(let pets):
-                    print("Fetched pets: \(pets)")
                     self.pets = pets
                 case .failure(let error):
                     print("Error fetching pets: \(error.message)")

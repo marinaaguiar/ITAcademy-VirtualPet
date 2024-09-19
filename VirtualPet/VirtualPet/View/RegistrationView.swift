@@ -54,7 +54,6 @@ struct RegistrationView_Previews: PreviewProvider {
                 User(id: UUID().uuidString, username: "Marina", password: "***", pets: [])
             ]),
             onSuccess: {
-                // Placeholder closure for the preview
                 print("Registration successful!")
             }
         )

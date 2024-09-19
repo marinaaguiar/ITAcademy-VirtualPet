@@ -7,11 +7,13 @@
 
 import SwiftUI
 
+import SwiftUI
+
+import SwiftUI
+
 struct HomeView: View {
     @State private var showCreatePetView = false
-    @State private var displayedPets: [Pet] = [
-        Pet(id: "343234", name: "Claudio", uniqueCharacteristic: "fluffy", energyLevel: 80, type: .blackCat, mood: .excited, needs: [.care, .full]
-    )]
+    @State private var hasFetchedPets = false
     @ObservedObject var homeViewModel: HomeViewModel
     @ObservedObject var authViewModel: AuthViewModel
 
@@ -27,14 +29,13 @@ struct HomeView: View {
             )
             .ignoresSafeArea()
 
-
             VStack {
                 if homeViewModel.isLoading {
                     Spacer()
                     ProgressView("Loading Pets...")
                         .progressViewStyle(CircularProgressViewStyle())
                     Spacer()
-                } else if displayedPets.isEmpty {
+                } else if homeViewModel.pets.isEmpty {
                     Spacer()
                     Image("VirtualPetIconPng")
                         .resizable()
@@ -60,7 +61,7 @@ struct HomeView: View {
                     }
                     .padding(25)
                 } else {
-                    List(displayedPets) { pet in
+                    List(homeViewModel.pets) { pet in
                         NavigationLink(destination: PetDetailsView(viewModel: PetDetailsViewModel(pet: pet))) {
                             HStack {
                                 Image("\(pet.type.rawValue)")
@@ -97,23 +98,27 @@ struct HomeView: View {
             }
         }
         .onAppear {
-            DispatchQueue.main.async {
-                if let user = authViewModel.loggedInUser, let token = authViewModel.authToken {
-                    print("User: \(user.id), Token: \(token)")
-                    homeViewModel.fetchUserPets(userId: user.id, token: token)
-                } else {
-                    print("User or token is missing!")
-                }
+            if !hasFetchedPets {
+                fetchPets()
             }
         }
-        .onChange(of: homeViewModel.pets) { newPets in
-            displayedPets = newPets
+    }
+
+    private func fetchPets() {
+        if let user = authViewModel.loggedInUser,
+           let token = authViewModel.authToken {
+            hasFetchedPets = true
+            homeViewModel.fetchUserPets(userId: user.id, token: token)
+        } else {
+            print("User or token is missing!")
         }
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(homeViewModel: HomeViewModel(), authViewModel: AuthViewModel(users: []))
+        HomeView(
+            homeViewModel: HomeViewModel(),
+            authViewModel: AuthViewModel(users: []))
     }
 }

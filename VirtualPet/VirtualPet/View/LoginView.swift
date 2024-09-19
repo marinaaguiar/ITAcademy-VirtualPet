@@ -10,6 +10,8 @@ import SwiftUI
 struct LoginView: View {
     @ObservedObject var viewModel: AuthViewModel
     @State private var showHomeView = false
+    @StateObject private var homeViewModel = HomeViewModel()
+
     var onSuccess: () -> Void
 
     var body: some View {
@@ -47,7 +49,7 @@ struct LoginView: View {
         }
         .background(
             NavigationLink(
-                destination: HomeView(homeViewModel: HomeViewModel(), authViewModel: viewModel),
+                destination: HomeView(homeViewModel: homeViewModel, authViewModel: viewModel),
                 isActive: $showHomeView
             ) {
                 EmptyView()

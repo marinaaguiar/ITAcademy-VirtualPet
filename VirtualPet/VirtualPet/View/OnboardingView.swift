@@ -20,6 +20,7 @@ struct OnboardingView: View {
 
     var body: some View {
         NavigationStack {
+
             ZStack {
                 LinearGradient(
                     gradient: Gradient(colors: [
@@ -40,23 +41,17 @@ struct OnboardingView: View {
 
                     Spacer()
 
-                    NavigationLink(
-                        destination: HomeView(
-                            homeViewModel: HomeViewModel(),
-                            authViewModel: authViewModel
-                        )
+                    NavigationLink(destination: HomeView(
+                        homeViewModel: HomeViewModel(), authViewModel: AuthViewModel(users: users))
                         .navigationBarBackButtonHidden(true)
                         .navigationBarHidden(true),
-                        isActive: $navigateToHome
-                    ) {
+                                   isActive: $navigateToHome) {
                         EmptyView()
                     }
 
-                    NavigationLink(
-                        destination: RegistrationView(viewModel: authViewModel, onSuccess: {
-                            navigateToHome = true
-                        })
-                    ) {
+                    NavigationLink(destination: RegistrationView(viewModel: authViewModel, onSuccess: {
+                        navigateToHome = true
+                    })) {
                         Text("Register")
                             .font(.headline)
                             .padding()
@@ -67,14 +62,9 @@ struct OnboardingView: View {
                     }
                     .padding(.horizontal)
 
-                    NavigationLink(
-                        destination:
-                            LoginView(
-                                viewModel: authViewModel,
-                                onSuccess: {
-                            navigateToHome = true
-                        })
-                    ) {
+                    NavigationLink(destination: LoginView(viewModel: authViewModel, onSuccess: {
+                        navigateToHome = true
+                    })) {
                         Text("Login")
                             .font(.headline)
                             .padding()

@@ -12,7 +12,6 @@
 		9C05AD372C860743009D027D /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C05AD362C860743009D027D /* LottieView.swift */; };
 		9C05AD3B2C8713A9009D027D /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 9C05AD3A2C8713A9009D027D /* Lottie */; };
 		9C15F5A72C7F48B400D3DFD4 /* VirtualPetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15F5A62C7F48B400D3DFD4 /* VirtualPetApp.swift */; };
-		9C15F5A92C7F48B400D3DFD4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15F5A82C7F48B400D3DFD4 /* ContentView.swift */; };
 		9C15F5AB2C7F48B500D3DFD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C15F5AA2C7F48B500D3DFD4 /* Assets.xcassets */; };
 		9C15F5AE2C7F48B500D3DFD4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C15F5AD2C7F48B500D3DFD4 /* Preview Assets.xcassets */; };
 		9C15F5B82C7F48B500D3DFD4 /* VirtualPetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15F5B72C7F48B500D3DFD4 /* VirtualPetTests.swift */; };
@@ -65,7 +64,6 @@
 		9C05AD362C860743009D027D /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		9C15F5A32C7F48B400D3DFD4 /* VirtualPet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualPet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C15F5A62C7F48B400D3DFD4 /* VirtualPetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualPetApp.swift; sourceTree = "<group>"; };
-		9C15F5A82C7F48B400D3DFD4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9C15F5AA2C7F48B500D3DFD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9C15F5AD2C7F48B500D3DFD4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9C15F5B32C7F48B500D3DFD4 /* VirtualPetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtualPetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,7 +189,6 @@
 		9C15F5D42C7F535600D3DFD4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				9C15F5A82C7F48B400D3DFD4 /* ContentView.swift */,
 				9C15F5DE2C7F78FE00D3DFD4 /* OnboardingView.swift */,
 				9C15F5DA2C7F76A900D3DFD4 /* RegistrationView.swift */,
 				9C15F5E02C7F791200D3DFD4 /* LoginView.swift */,
@@ -382,7 +379,6 @@
 				9C05AD322C81CA20009D027D /* PetDetailsView.swift in Sources */,
 				9C15F5D92C7F538800D3DFD4 /* PetType.swift in Sources */,
 				9C9BF5342C888B68001CF73C /* NetworkingService.swift in Sources */,
-				9C15F5A92C7F48B400D3DFD4 /* ContentView.swift in Sources */,
 				9C15F5DF2C7F78FF00D3DFD4 /* OnboardingView.swift in Sources */,
 				9C9BF5362C889075001CF73C /* AuthService.swift in Sources */,
 				9C15F5DB2C7F76A900D3DFD4 /* RegistrationView.swift in Sources */,
