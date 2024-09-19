@@ -11,19 +11,23 @@ class UserService {
     private let networkingService = NetworkingService()
     private let baseURL = "http://127.0.0.1:8080/api/users"
 
-    func addPetToUser(userId: String, pet: Pet, completion: @escaping (Result<User, ErrorResponse>) -> Void) {
+    func getUserPets(userId: String, token: String, completion: @escaping (Result<[Pet], ErrorResponse>) -> Void) {
         guard let url = URL(string: "\(baseURL)/\(userId)/pets") else {
-            let errorResponse = ErrorResponse(message: "Invalid URL", statusCode: 400)
-            completion(.failure(errorResponse))
+            completion(.failure(ErrorResponse(message: "Invalid URL", statusCode: 400)))
             return
         }
 
-        do {
-            let jsonData = try JSONEncoder().encode(pet)
-            networkingService.postRequest(url: url, body: jsonData, completion: completion)
-        } catch {
-            let errorResponse = ErrorResponse(message: "Failed to encode pet", statusCode: 400)
-            completion(.failure(errorResponse))
+        networkingService.request(url: url, method: .get, addAuthToken: true) { (result: Result<[Pet], ErrorResponse>) in
+            switch result {
+            case .success(let pets):
+                completion(.success(pets))
+            case .failure(let error):
+                completion(.failure(error))
+            }
         }
+    }
+
+    func addPetToUser(userId: String, pet: Pet, completion: @escaping (Result<User, ErrorResponse>) -> Void) {
+        // Add logic for adding a new pet (Not required right now)
     }
 }
