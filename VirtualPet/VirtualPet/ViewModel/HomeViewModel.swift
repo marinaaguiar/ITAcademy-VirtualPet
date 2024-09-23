@@ -22,7 +22,7 @@ class HomeViewModel: ObservableObject {
         isLoading = true
 
         userService.getUserPets(userId: userId, token: token) { [weak self] result in
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {  
                 guard let self = self else { return }
                 self.isLoading = false
 

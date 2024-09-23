@@ -12,12 +12,12 @@ struct HomeView: View {
     @ObservedObject var authViewModel: AuthViewModel
 
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
+        ZStack() {
             BackgroundGradient()
 
             VStack {
                 if homeViewModel.isLoading {
-                    LoadingView()
+                    PetPlaceholderView()
                         .transition(.opacity)
                 } else if homeViewModel.pets.isEmpty {
                     EmptyStateView(
@@ -29,7 +29,6 @@ struct HomeView: View {
                         homeViewModel: homeViewModel,
                         authViewModel: authViewModel
                     )
-                    .transition(.opacity)
                 }
                 Spacer()
             }
@@ -113,19 +112,13 @@ struct EmptyStateView: View {
                 .padding(.top, 20)
 
             Spacer()
-            Button(action: {
-                if let loggedInUser = authViewModel.loggedInUser {
-                    homeViewModel.initializeCreatePetViewModel(userId: loggedInUser.id)
-                }
-            }) {
-                Text("Create New Pet")
-                    .font(.headline)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.mint)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
+            FloatingActionButton(
+                homeViewModel: homeViewModel,
+                authViewModel: authViewModel,
+                fontSize: 20,
+                paddingSize: 20,
+                cornerRadius: 15
+            )
             .padding(25)
         }
     }
@@ -161,8 +154,14 @@ struct PetListView: View {
                         }
                     }
                 }
-                FloatingActionButton(homeViewModel: homeViewModel, authViewModel: authViewModel)
-                    .padding(.bottom, 30)
+                FloatingActionButton(
+                    homeViewModel: homeViewModel,
+                    authViewModel: authViewModel,
+                    fontSize: 16,
+                    paddingSize: 12,
+                    cornerRadius: 10
+                )
+                .padding(.bottom, 30)
             }
         }
         .padding(.bottom, -40)
@@ -174,6 +173,9 @@ struct PetListView: View {
 struct FloatingActionButton: View {
     @ObservedObject var homeViewModel: HomeViewModel
     @ObservedObject var authViewModel: AuthViewModel
+    var fontSize: CGFloat
+    var paddingSize: CGFloat
+    var cornerRadius: CGFloat
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -184,14 +186,14 @@ struct FloatingActionButton: View {
             }) {
                 HStack {
                     Image(systemName: "plus")
-                        .font(.system(size: 20))
+                        .font(.system(size: fontSize))
                     Text("Create a New Pet")
-                        .font(.headline)
+                        .font(.system(size: fontSize))
                 }
                 .foregroundColor(.white)
-                .padding()
+                .padding(paddingSize)
                 .background(Color.mint)
-                .cornerRadius(10)
+                .cornerRadius(cornerRadius)
                 .shadow(radius: 10)
             }
         }
