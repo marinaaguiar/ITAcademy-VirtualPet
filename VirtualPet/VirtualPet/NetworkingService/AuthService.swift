@@ -9,7 +9,7 @@ import Foundation
 
 class AuthService {
     private let networkingService = NetworkingService()
-    private let baseURL = "http://127.0.0.1:8080/api/auth"
+    private let baseURL = "http://10.0.0.148:8080/api/auth"
 
     func registerUser(username: String, password: String, completion: @escaping (Result<LoginResponse, ErrorResponse>) -> Void) {
         guard let url = URL(string: "\(baseURL)/register") else {

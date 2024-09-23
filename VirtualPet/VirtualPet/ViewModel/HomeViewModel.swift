@@ -12,6 +12,8 @@ class HomeViewModel: ObservableObject {
     @Published var pets: [Pet] = []
     @Published var errorMessage: String? = nil
     @Published var isLoading: Bool = false
+    @Published var showCreatePetView: Bool = false
+    @Published var createPetViewModel: CreatePetViewModel? = nil
 
     private let userService = UserService()
 
@@ -33,5 +35,14 @@ class HomeViewModel: ObservableObject {
                 }
             }
         }
+    }
+
+    func initializeCreatePetViewModel(userId: String) {
+        createPetViewModel = CreatePetViewModel(pets: pets, userId: userId)
+        showCreatePetView = true
+    }
+
+    func handlePetCreationSuccess(userId: String, token: String) {
+        fetchUserPets(userId: userId, token: token)
     }
 }

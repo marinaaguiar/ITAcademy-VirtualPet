@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct Pet: Identifiable, Codable, Equatable {
-    let id: String
+    var id: String?
     var name: String
     var uniqueCharacteristic: String
     var energyLevel: Int

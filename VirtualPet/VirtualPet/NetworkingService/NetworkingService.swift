@@ -45,7 +45,13 @@ class NetworkingService {
 
         if addAuthToken, let token = authToken {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            print("Authorization Token: \(token)")
         }
+
+        if let httpBody = request.httpBody {
+            print("Request Body: \(String(data: httpBody, encoding: .utf8) ?? "")")
+        }
+        print("Request Headers: \(request.allHTTPHeaderFields ?? [:])")
 
         let task = sharedSession.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -53,8 +59,6 @@ class NetworkingService {
                     let errorResponse = ErrorResponse(message: error.localizedDescription, statusCode: 500)
                     completion(.failure(errorResponse))
                 }
-
-                print(error.localizedDescription)
                 return
             }
 
@@ -66,27 +70,7 @@ class NetworkingService {
                 return
             }
 
-            if httpResponse.statusCode != 200 {
-                if let data = data {
-                    do {
-                        let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
-                        DispatchQueue.main.async {
-                            completion(.failure(errorResponse))
-                        }
-                    } catch {
-                        DispatchQueue.main.async {
-                            let errorResponse = ErrorResponse(message: "Unknown error occurred", statusCode: httpResponse.statusCode)
-                            completion(.failure(errorResponse))
-                        }
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        let errorResponse = ErrorResponse(message: "No error data received", statusCode: httpResponse.statusCode)
-                        completion(.failure(errorResponse))
-                    }
-                }
-                return
-            }
+            print("Status code: \(httpResponse.statusCode)")
 
             guard let data = data else {
                 DispatchQueue.main.async {
@@ -96,30 +80,36 @@ class NetworkingService {
                 return
             }
 
+            let rawResponse = String(data: data, encoding: .utf8)
+            print("Raw Response: \(String(describing: rawResponse))")
+
             do {
                 let decodedData = try JSONDecoder().decode(T.self, from: data)
+                print(decodedData)
                 DispatchQueue.main.async {
                     completion(.success(decodedData))
                 }
             } catch {
+                print(error)
                 DispatchQueue.main.async {
                     let errorResponse = ErrorResponse(message: "Failed to decode response", statusCode: 500)
                     completion(.failure(errorResponse))
                 }
+                print("Decoding error: \(error.localizedDescription)")
             }
         }
         task.resume()
     }
 
     func getRequest<T: Decodable>(url: URL, completion: @escaping(Result<T, ErrorResponse>) -> Void) {
-        request(url: url, method: .get, addAuthToken: true, completion: completion)
+        request(url: url, method: .get, completion: completion)
     }
 
     func postRequest<T: Decodable>(url: URL, body: Data, addAuthToken: Bool = true, completion: @escaping(Result<T, ErrorResponse>) -> Void) {
         request(url: url, method: .post, body: body, addAuthToken: addAuthToken, completion: completion)
     }
 
-    func putRequest<T: Decodable>(url: URL, body: Data, addAuthToken: Bool = true, completion: @escaping(Result<T, ErrorResponse>) -> Void) {
-        request(url: url, method: .put, body: body, addAuthToken: addAuthToken, completion: completion)
+    func putRequest<T: Decodable>(url: URL, body: Data, completion: @escaping(Result<T, ErrorResponse>) -> Void) {
+        request(url: url, method: .put, body: body, completion: completion)
     }
 }

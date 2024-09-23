@@ -9,12 +9,10 @@ import SwiftUI
 
 struct CreatePetView: View {
     @ObservedObject var viewModel: CreatePetViewModel
-
     @Binding var isPresented: Bool
 
     var body: some View {
         NavigationView {
-            
             ZStack {
                 LinearGradient(
                     gradient: Gradient(colors: [
@@ -25,20 +23,19 @@ struct CreatePetView: View {
                     endPoint: .center
                 )
                 .ignoresSafeArea()
-                
+
                 VStack {
                     LottieView(filename: viewModel.selectedCreature.getLottieFileName())
                         .frame(height: 200)
                         .clipped()
                         .padding(.top, 20)
-                    
+
                     Form {
                         Section(header: Text("Pet Details")) {
                             TextField("Pet Name", text: $viewModel.petName)
-                            
                             TextField("Unique Characteristic", text: $viewModel.uniqueCharacteristic)
                         }
-                        
+
                         Section(header: Text("Choose Your Cat")) {
                             Picker("Color", selection: $viewModel.selectedCreature) {
                                 ForEach(PetType.allCases) { creature in
@@ -47,11 +44,17 @@ struct CreatePetView: View {
                             }
                             .pickerStyle(.menu)
                         }
-                        
+
                         Section {
                             Button(action: {
-                                viewModel.createPet()
-                                isPresented = false
+                                // Create the pet only when "Create Pet" button is pressed
+                                viewModel.createPet { success in
+                                    if success {
+                                        isPresented = false // Close the modal after success
+                                    } else {
+                                        print("Failed to create pet")
+                                    }
+                                }
                             }) {
                                 Text("Create Pet")
                                     .font(.headline)
@@ -64,9 +67,9 @@ struct CreatePetView: View {
                             .listRowBackground(Color.clear)
                         }
                     }
-                    .navigationTitle("Create a Pet")
+                    .navigationTitle("Create your new Pet")
                     .navigationBarItems(trailing: Button("Cancel") {
-                        isPresented = false
+                        isPresented = false // Simply dismiss the modal without creating the pet
                     })
                 }
             }

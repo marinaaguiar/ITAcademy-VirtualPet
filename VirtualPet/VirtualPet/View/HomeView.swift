@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var showCreatePetView = false
-    @State private var hasFetchedPets = false
     @ObservedObject var homeViewModel: HomeViewModel
     @ObservedObject var authViewModel: AuthViewModel
 
@@ -20,10 +18,18 @@ struct HomeView: View {
             VStack {
                 if homeViewModel.isLoading {
                     LoadingView()
+                        .transition(.opacity)
                 } else if homeViewModel.pets.isEmpty {
-                    EmptyStateView(showCreatePetView: $showCreatePetView)
+                    EmptyStateView(
+                        homeViewModel: homeViewModel,
+                        authViewModel: authViewModel
+                    )
                 } else {
-                    PetListView(homeViewModel: homeViewModel)
+                    PetListView(
+                        homeViewModel: homeViewModel,
+                        authViewModel: authViewModel
+                    )
+                    .transition(.opacity)
                 }
                 Spacer()
             }
@@ -37,22 +43,23 @@ struct HomeView: View {
                     .foregroundColor(.red)
                 }
             }
-
         }
         .onAppear {
-            if !hasFetchedPets {
-                fetchPets()
+            if let loggedInUser = authViewModel.loggedInUser, let token = authViewModel.authToken {
+                homeViewModel.fetchUserPets(userId: loggedInUser.id, token: token)
+            } else {
+                print("User or token is missing!")
             }
         }
-    }
-
-    private func fetchPets() {
-        if let user = authViewModel.loggedInUser,
-           let token = authViewModel.authToken {
-            hasFetchedPets = true
-            homeViewModel.fetchUserPets(userId: user.id, token: token)
-        } else {
-            print("User or token is missing!")
+        .sheet(isPresented: $homeViewModel.showCreatePetView) {
+            if let viewModel = homeViewModel.createPetViewModel {
+                CreatePetView(viewModel: viewModel, isPresented: $homeViewModel.showCreatePetView)
+                    .onDisappear {
+                        if let user = authViewModel.loggedInUser, let token = authViewModel.authToken {
+                            homeViewModel.handlePetCreationSuccess(userId: user.id, token: token)
+                        }
+                    }
+            }
         }
     }
 }
@@ -75,18 +82,22 @@ struct BackgroundGradient: View {
 // MARK: - Loading View
 struct LoadingView: View {
     var body: some View {
-        VStack {
-            Spacer()
-            ProgressView("Loading Pets...")
-                .progressViewStyle(CircularProgressViewStyle())
-            Spacer()
+        ZStack {
+            VStack {
+                Spacer()
+                ProgressView("Loading Pets...")
+                    .progressViewStyle(CircularProgressViewStyle())
+                Spacer()
+            }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 // MARK: - Empty State View
 struct EmptyStateView: View {
-    @Binding var showCreatePetView: Bool
+    @ObservedObject var homeViewModel: HomeViewModel
+    @ObservedObject var authViewModel: AuthViewModel
 
     var body: some View {
         VStack {
@@ -103,7 +114,9 @@ struct EmptyStateView: View {
 
             Spacer()
             Button(action: {
-                showCreatePetView = true
+                if let loggedInUser = authViewModel.loggedInUser {
+                    homeViewModel.initializeCreatePetViewModel(userId: loggedInUser.id)
+                }
             }) {
                 Text("Create New Pet")
                     .font(.headline)
@@ -114,9 +127,6 @@ struct EmptyStateView: View {
                     .cornerRadius(10)
             }
             .padding(25)
-            .sheet(isPresented: $showCreatePetView) {
-                CreatePetView(viewModel: CreatePetViewModel(pets: [], userId: "userId"), isPresented: $showCreatePetView)
-            }
         }
     }
 }
@@ -124,7 +134,7 @@ struct EmptyStateView: View {
 // MARK: - Pet List View
 struct PetListView: View {
     @ObservedObject var homeViewModel: HomeViewModel
-    @State private var showCreatePetView = false
+    @ObservedObject var authViewModel: AuthViewModel
 
     var body: some View {
         ZStack {
@@ -151,7 +161,7 @@ struct PetListView: View {
                         }
                     }
                 }
-                FloatingActionButton(showCreatePetView: $showCreatePetView)
+                FloatingActionButton(homeViewModel: homeViewModel, authViewModel: authViewModel)
                     .padding(.bottom, 30)
             }
         }
@@ -159,14 +169,18 @@ struct PetListView: View {
     }
 }
 
+
 // MARK: - Floating Action Button
 struct FloatingActionButton: View {
-    @Binding var showCreatePetView: Bool
+    @ObservedObject var homeViewModel: HomeViewModel
+    @ObservedObject var authViewModel: AuthViewModel
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             Button(action: {
-                showCreatePetView = true
+                if let loggedInUser = authViewModel.loggedInUser {
+                    homeViewModel.initializeCreatePetViewModel(userId: loggedInUser.id)
+                }
             }) {
                 HStack {
                     Image(systemName: "plus")
@@ -179,9 +193,6 @@ struct FloatingActionButton: View {
                 .background(Color.mint)
                 .cornerRadius(10)
                 .shadow(radius: 10)
-            }
-            .sheet(isPresented: $showCreatePetView) {
-                CreatePetView(viewModel: CreatePetViewModel(pets: [], userId: "userId"), isPresented: $showCreatePetView)
             }
         }
     }
