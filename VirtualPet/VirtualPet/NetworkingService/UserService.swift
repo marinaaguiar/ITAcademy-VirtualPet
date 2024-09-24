@@ -9,7 +9,7 @@ import Foundation
 
 class UserService {
     private let networkingService = NetworkingService()
-    private let baseURL = "http://10.0.0.148:8080/api/users"
+    private let baseURL = "http://10.0.0.135:8080/api/users"
 
     func getUserPets(userId: String, token: String, completion: @escaping (Result<[Pet], ErrorResponse>) -> Void) {
         guard let url = URL(string: "\(baseURL)/\(userId)/pets") else {

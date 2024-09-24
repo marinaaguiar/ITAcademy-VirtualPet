@@ -9,7 +9,7 @@ import Foundation
 
 class AuthService {
     private let networkingService = NetworkingService()
-    private let baseURL = "http://10.0.0.148:8080/api/auth"
+    private let baseURL = "http://10.0.0.135:8080/api/auth"
 
     func registerUser(username: String, password: String, completion: @escaping (Result<LoginResponse, ErrorResponse>) -> Void) {
         guard let url = URL(string: "\(baseURL)/register") else {
@@ -103,11 +103,13 @@ class AuthService {
                     UserDefaults.standard.set(userResponse.token, forKey: "authToken")
                     completion(.success(userResponse))
                 case .failure(let errorResponse):
+                    print("Error: \(errorResponse)")
                     completion(.failure(errorResponse))
                 }
             }
         } catch {
             let errorResponse = ErrorResponse(message: "Failed to create request body", statusCode: 400)
+            print("Error: \(errorResponse)")
             completion(.failure(errorResponse))
         }
     }
