@@ -35,8 +35,10 @@ class AuthViewModel: ObservableObject {
         authService.registerUser(username: username, password: password) { result in
             DispatchQueue.main.async {
                 switch result {
-                case .success:
+                case .success(let response):
                     self.isLoggedIn = true
+                    self.loggedInUser = response.user
+                    self.authToken = response.token
                     onSuccess()
                 case .failure(let errorResponse):
                     self.alertMessage = errorResponse.message

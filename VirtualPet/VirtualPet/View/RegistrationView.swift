@@ -9,35 +9,39 @@ import SwiftUI
 
 struct RegistrationView: View {
     @ObservedObject var viewModel: AuthViewModel
+    @EnvironmentObject var router: Router
+
     var onSuccess: () -> Void
 
     var body: some View {
-        Form {
-            Section(header: Text("Create Account")) {
-                TextField("Username", text: $viewModel.username)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
+        VStack {
+            Form {
+                Section(header: Text("Create Account")) {
+                    TextField("Username", text: $viewModel.username)
+                        .autocapitalization(.none)
+                        .disableAutocorrection(true)
 
-                SecureField("Password", text: $viewModel.password)
+                    SecureField("Password", text: $viewModel.password)
 
-                SecureField("Confirm Password", text: $viewModel.confirmPassword)
-            }
-
-            Section {
-                Button(action: {
-                    viewModel.registerUser {
-                        onSuccess()
-                    }
-                }) {
-                    Text("Register")
-                        .font(.headline)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.mint)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    SecureField("Confirm Password", text: $viewModel.confirmPassword)
                 }
-                .listRowBackground(Color.clear)
+
+                Section {
+                    Button(action: {
+                        viewModel.registerUser {
+                            router.navigate(to: .home)
+                        }
+                    }) {
+                        Text("Register")
+                            .font(.headline)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.mint)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .listRowBackground(Color.clear)
+                }
             }
         }
         .navigationTitle("Register")
@@ -52,8 +56,7 @@ struct RegistrationView_Previews: PreviewProvider {
         RegistrationView(
             viewModel: AuthViewModel(users: [
                 User(id: UUID().uuidString, username: "Marina", password: "***", pets: [])
-            ]),
-            onSuccess: {
+            ]), onSuccess: {
                 print("Registration successful!")
             }
         )

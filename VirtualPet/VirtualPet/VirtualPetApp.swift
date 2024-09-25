@@ -23,9 +23,10 @@ struct VirtualPetApp: App {
                       router.navigate(to: .home)
                     }
                 case .registration:
-                  RegistrationView(viewModel: authViewModel) {
-                    router.navigate(to: .home)
-                  }
+                    RegistrationView(viewModel: authViewModel) {
+                      router.navigate(to: .home)
+                    }
+
                 case .home:
                     HomeView(authViewModel: authViewModel)
                 }

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct LoginView: View {
     @ObservedObject var viewModel: AuthViewModel
-    @StateObject private var homeViewModel = HomeViewModel()
     @EnvironmentObject var router: Router
 
     var onSuccess: () -> Void
