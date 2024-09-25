@@ -9,8 +9,8 @@ import SwiftUI
 
 struct LoginView: View {
     @ObservedObject var viewModel: AuthViewModel
-    @State private var showHomeView = false
     @StateObject private var homeViewModel = HomeViewModel()
+    @EnvironmentObject var router: Router
 
     var onSuccess: () -> Void
 
@@ -28,7 +28,7 @@ struct LoginView: View {
                 Section {
                     Button(action: {
                         viewModel.loginUser {
-                            showHomeView = true
+                            router.navigate(to: .home)
                         }
                     }) {
                         Text("Login")
@@ -47,15 +47,6 @@ struct LoginView: View {
         .alert(isPresented: $viewModel.showAlert) {
             Alert(title: Text("Login Error"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
         }
-        .background(
-            NavigationLink(
-                destination: HomeView(homeViewModel: homeViewModel, authViewModel: viewModel)
-                    .navigationBarBackButtonHidden(true), // Only hide back button
-                isActive: $showHomeView
-            ) {
-                EmptyView()
-            }
-        )
     }
 }
 

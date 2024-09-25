@@ -25,7 +25,6 @@ class HomeViewModel: ObservableObject {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {  
                 guard let self = self else { return }
                 self.isLoading = false
-
                 switch result {
                 case .success(let pets):
                     self.pets = pets

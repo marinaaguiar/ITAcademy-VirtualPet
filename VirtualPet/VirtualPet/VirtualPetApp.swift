@@ -9,9 +9,28 @@ import SwiftUI
 
 @main
 struct VirtualPetApp: App {
+    @StateObject var router = Router()
+    @StateObject var authViewModel = AuthViewModel(users: [User(id: UUID().uuidString, username: "Marina", password: "***", pets: [])])
+
     var body: some Scene {
         WindowGroup {
-            OnboardingView(users: .constant([User(id: UUID().uuidString, username: "Marina", password: "***", pets: [])]))
+            NavigationStack {
+                switch router.currentRoute {
+                case .onboarding:
+                    OnboardingView(authViewModel: authViewModel)
+                case .login:
+                    LoginView(viewModel: authViewModel) {
+                      router.navigate(to: .home)
+                    }
+                case .registration:
+                  RegistrationView(viewModel: authViewModel) {
+                    router.navigate(to: .home)
+                  }
+                case .home:
+                    HomeView(authViewModel: authViewModel)
+                }
+            }
+            .environmentObject(router)
         }
     }
 }

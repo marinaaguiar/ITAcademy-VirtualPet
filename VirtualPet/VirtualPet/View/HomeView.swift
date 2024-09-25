@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct HomeView: View {
-    @ObservedObject var homeViewModel: HomeViewModel
+    @StateObject private var homeViewModel = HomeViewModel()
     @ObservedObject var authViewModel: AuthViewModel
+    @EnvironmentObject var router: Router
 
     var body: some View {
-        ZStack() {
+        ZStack {
             BackgroundGradient()
 
             VStack {
@@ -33,21 +34,24 @@ struct HomeView: View {
                 Spacer()
             }
             .background(Color.clear)
-            .navigationTitle("Virtual Pet")
+            .navigationTitle("Pets")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Log Out") {
                         authViewModel.logOutUser()
+                        router.resetToOnboarding()
                     }
                     .foregroundColor(.red)
                 }
             }
         }
         .onAppear {
-            if let loggedInUser = authViewModel.loggedInUser, let token = authViewModel.authToken {
-                homeViewModel.fetchUserPets(userId: loggedInUser.id, token: token)
-            } else {
-                print("User or token is missing!")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                if let loggedInUser = authViewModel.loggedInUser, let token = authViewModel.authToken {
+                    homeViewModel.fetchUserPets(userId: loggedInUser.id, token: token)
+                } else {
+                    print("User or token is missing!")
+                }
             }
         }
         .sheet(isPresented: $homeViewModel.showCreatePetView) {
@@ -203,7 +207,6 @@ struct FloatingActionButton: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView(
-            homeViewModel: HomeViewModel(),
             authViewModel: AuthViewModel(users: []))
     }
 }

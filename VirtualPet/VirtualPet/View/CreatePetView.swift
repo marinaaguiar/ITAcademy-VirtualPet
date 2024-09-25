@@ -69,7 +69,7 @@ struct CreatePetView: View {
                     }
                     .navigationTitle("Create your new Pet")
                     .navigationBarItems(trailing: Button("Cancel") {
-                        isPresented = false // Simply dismiss the modal without creating the pet
+                        isPresented = false
                     })
                 }
             }

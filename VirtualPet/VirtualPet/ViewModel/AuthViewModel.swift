@@ -14,14 +14,14 @@ class AuthViewModel: ObservableObject {
     @Published var confirmPassword: String = ""
     @Published var showAlert: Bool = false
     @Published var alertMessage: String = ""
-    @Published var navigateToHome: Bool = false
-    @Published var users: [User] = []
     @Published var loggedInUser: User? = nil
     @Published var authToken: String? = nil
+    @Published var isLoggedIn: Bool = false
+    @Published var users: [User]
 
     private let authService = AuthService()
 
-    init(users: [User]) {
+    init(users: [User] = []) {
         self.users = users
     }
 
@@ -36,6 +36,7 @@ class AuthViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success:
+                    self.isLoggedIn = true
                     onSuccess()
                 case .failure(let errorResponse):
                     self.alertMessage = errorResponse.message
@@ -56,9 +57,9 @@ class AuthViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
+                    self.isLoggedIn = true
                     self.loggedInUser = response.user
                     self.authToken = response.token
-                    self.navigateToHome = true
                     onSuccess()
                 case .failure(let errorResponse):
                     self.alertMessage = errorResponse.message
@@ -71,7 +72,6 @@ class AuthViewModel: ObservableObject {
     func logOutUser() {
         UserDefaults.standard.removeObject(forKey: "authToken")
         resetFields()
-        navigateToHome = false
     }
 
     private func resetFields() {
@@ -80,5 +80,6 @@ class AuthViewModel: ObservableObject {
         confirmPassword = ""
         loggedInUser = nil
         authToken = nil
+        isLoggedIn = false
     }
 }
