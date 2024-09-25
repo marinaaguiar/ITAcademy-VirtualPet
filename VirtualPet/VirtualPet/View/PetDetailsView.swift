@@ -40,6 +40,9 @@ struct PetDetailsView: View {
 
                 VStack(alignment: .leading, spacing: 22) {
 
+                    Text("Characteristic: \(viewModel.pet.uniqueCharacteristic)")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
                     HStack {
                         InfoBadgeView(text: "Mood: " + viewModel.pet.mood.getEmoji(), backgroundColor: Color.yellow.opacity(0.3))
                     }
@@ -95,10 +98,11 @@ struct PetDetailsView: View {
                 .background(Color.white)
                 .cornerRadius(20)
                 .shadow(color: Color.white.opacity(0.5),radius: 50)
-                .edgesIgnoringSafeArea(.bottom)
+//                .edgesIgnoringSafeArea(.bottom)
             }
             .padding(.top, 350)
         }
+        .padding(.bottom, 24)
         .edgesIgnoringSafeArea(.top)
         .background(Color(UIColor.systemGroupedBackground))
         .onAppear {
@@ -171,7 +175,6 @@ struct PetDetailsView_Previews: PreviewProvider {
             uniqueCharacteristic: "Fluffy tail",
             energyLevel: 80,
             type: .lightGrayCat,
-//            imageName: "Pet-Claudio",
             mood: .happy,
             needs: [.full, .loved]
         )))

@@ -49,16 +49,13 @@ class PetDetailsViewModel: ObservableObject {
     func feedPet() {
         pet.energyLevel = min(100, pet.energyLevel + 20)
         updateNeeds(need: .full)
-        pet.mood = .happy
     }
 
     func giveWaterToPet() {
         updateNeeds(need: .hydrated)
-        pet.mood = .happy
     }
 
     func playWithPet() {
-        pet.mood = .excited
         updateNeeds(need: .loved)
         pet.energyLevel = max(0, pet.energyLevel - 10)
     }
@@ -73,6 +70,26 @@ class PetDetailsViewModel: ObservableObject {
             pet.needs[index] = need
         } else if !pet.needs.contains(need) {
             pet.needs.append(need)
+        }
+        updateMood()
+    }
+
+    private func updateMood() {
+        if pet.energyLevel < 60 {
+            pet.mood = .tired
+            return
+        }
+
+        if pet.needs.contains(.hungry) || pet.needs.contains(.care) {
+            pet.mood = .sad
+        }
+
+        if pet.needs.contains(.loved)   {
+            pet.mood = .excited
+        }
+
+        if pet.needs.contains(.full) && pet.needs.contains(.hydrated) && pet.needs.contains(.loved) {
+            pet.mood = .happy
         }
     }
 
