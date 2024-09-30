@@ -47,10 +47,9 @@ struct CreatePetView: View {
 
                         Section {
                             Button(action: {
-                                // Create the pet only when "Create Pet" button is pressed
                                 viewModel.createPet { success in
                                     if success {
-                                        isPresented = false // Close the modal after success
+                                        isPresented = false
                                     } else {
                                         print("Failed to create pet")
                                     }

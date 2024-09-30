@@ -26,6 +26,7 @@
 		9C15F5DF2C7F78FF00D3DFD4 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15F5DE2C7F78FE00D3DFD4 /* OnboardingView.swift */; };
 		9C15F5E12C7F791200D3DFD4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15F5E02C7F791200D3DFD4 /* LoginView.swift */; };
 		9C3422552CA40E9200B98ADF /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3422542CA40E9000B98ADF /* Router.swift */; };
+		9C3422592CA5551500B98ADF /* PetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3422582CA5551200B98ADF /* PetService.swift */; };
 		9C5E2A712CA1BAD10071022C /* PetPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E2A702CA1BACC0071022C /* PetPlaceholderView.swift */; };
 		9C9BF5342C888B68001CF73C /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9BF5332C888B68001CF73C /* NetworkingService.swift */; };
 		9C9BF5362C889075001CF73C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9BF5352C889075001CF73C /* AuthService.swift */; };
@@ -83,6 +84,7 @@
 		9C15F5DE2C7F78FE00D3DFD4 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		9C15F5E02C7F791200D3DFD4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		9C3422542CA40E9000B98ADF /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		9C3422582CA5551200B98ADF /* PetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetService.swift; sourceTree = "<group>"; };
 		9C5E2A702CA1BACC0071022C /* PetPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetPlaceholderView.swift; sourceTree = "<group>"; };
 		9C9BF5332C888B68001CF73C /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 		9C9BF5352C889075001CF73C /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 		9C9BF5322C888B5A001CF73C /* NetworkingService */ = {
 			isa = PBXGroup;
 			children = (
+				9C3422582CA5551200B98ADF /* PetService.swift */,
 				9C9BF5332C888B68001CF73C /* NetworkingService.swift */,
 				9C9BF5352C889075001CF73C /* AuthService.swift */,
 				9CCDF4742C8F14A60013133F /* UserService.swift */,
@@ -386,6 +389,7 @@
 			files = (
 				9C15F5D72C7F537600D3DFD4 /* Pet.swift in Sources */,
 				9CFAFEE72C9C9766005CF70C /* UserResponse.swift in Sources */,
+				9C3422592CA5551500B98ADF /* PetService.swift in Sources */,
 				9C3422552CA40E9200B98ADF /* Router.swift in Sources */,
 				9C5E2A712CA1BAD10071022C /* PetPlaceholderView.swift in Sources */,
 				9C05AD322C81CA20009D027D /* PetDetailsView.swift in Sources */,

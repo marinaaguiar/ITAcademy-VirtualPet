@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct VirtualPetApp: App {
     @StateObject var router = Router()
-    @StateObject var authViewModel = AuthViewModel(users: [User(id: UUID().uuidString, username: "Marina", password: "***", pets: [])])
+    @StateObject var authViewModel = AuthViewModel(users: [User(id: UUID().uuidString, username: "Marina", password: "***", petIds: [])])
 
     var body: some Scene {
         WindowGroup {

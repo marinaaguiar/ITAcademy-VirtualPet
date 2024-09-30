@@ -27,7 +27,7 @@ class UserService {
         }
     }
 
-    func addPetToUser(userId: String, pet: Pet, completion: @escaping (Result<UserResponse, ErrorResponse>) -> Void) {
+    func addPetToUser(userId: String, pet: Pet, completion: @escaping (Result<[Pet], ErrorResponse>) -> Void) {
         guard let url = URL(string: "\(baseURL)/\(userId)/addPet") else {
             completion(.failure(ErrorResponse(message: "Invalid URL", statusCode: 400)))
             return
@@ -36,10 +36,10 @@ class UserService {
         do {
             let body = try JSONEncoder().encode(pet)
 
-            networkingService.postRequest(url: url, body: body, addAuthToken: true) { (result: Result<UserResponse, ErrorResponse>) in
+            networkingService.postRequest(url: url, body: body, addAuthToken: true) { (result: Result<[Pet], ErrorResponse>) in
                 switch result {
-                case .success(let updatedUser):
-                    completion(.success(updatedUser))
+                case .success(let pets):  // Return the updated list of pets
+                    completion(.success(pets))
                 case .failure(let error):
                     completion(.failure(error))
                 }

@@ -9,5 +9,5 @@ struct UserResponse: Identifiable, Codable {
     let id: String
     var username: String
     var password: String?
-    var pets: [Pet]
+    var pet: [Pet]
 }

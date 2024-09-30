@@ -37,9 +37,9 @@ class CreatePetViewModel: ObservableObject {
 
         userService.addPetToUser(userId: userId, pet: newPet) { result in
             switch result {
-            case .success(let updatedUser):
+            case .success(let updatedPets):
                 DispatchQueue.main.async {
-                    self.pets = updatedUser.pets
+                    self.pets = updatedPets
                     completion(true)
                 }
             case .failure(let errorResponse):

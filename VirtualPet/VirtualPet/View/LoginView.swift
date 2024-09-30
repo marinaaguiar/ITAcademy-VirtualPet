@@ -56,7 +56,7 @@ struct LoginView_Previews: PreviewProvider {
                 id: UUID().uuidString,
                 username: "SampleUser",
                 password: "*****",
-                pets: []
+                petIds: []
             )
         ]), onSuccess: {
             print("Login successful!")

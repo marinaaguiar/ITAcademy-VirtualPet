@@ -10,6 +10,7 @@ import SwiftUI
 
 struct Pet: Identifiable, Codable, Equatable {
     var id: String?
+    var userId: String?
     var name: String
     var uniqueCharacteristic: String
     var energyLevel: Int
