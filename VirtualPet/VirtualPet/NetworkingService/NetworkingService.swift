@@ -81,11 +81,9 @@ class NetworkingService {
             }
 
             let rawResponse = String(data: data, encoding: .utf8)
-            print("Raw Response: \(String(describing: rawResponse))")
 
             do {
                 let decodedData = try JSONDecoder().decode(T.self, from: data)
-                print(decodedData)
                 DispatchQueue.main.async {
                     completion(.success(decodedData))
                 }
@@ -109,7 +107,7 @@ class NetworkingService {
         request(url: url, method: .post, body: body, addAuthToken: addAuthToken, completion: completion)
     }
 
-    func putRequest<T: Decodable>(url: URL, body: Data, completion: @escaping(Result<T, ErrorResponse>) -> Void) {
-        request(url: url, method: .put, body: body, completion: completion)
+    func putRequest<T: Decodable>(url: URL, body: Data, addAuthToken: Bool = true, completion: @escaping(Result<T, ErrorResponse>) -> Void) {
+        request(url: url, method: .put, body: body, addAuthToken: addAuthToken, completion: completion)
     }
 }

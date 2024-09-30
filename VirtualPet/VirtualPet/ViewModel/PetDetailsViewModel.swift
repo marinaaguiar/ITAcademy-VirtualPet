@@ -10,12 +10,15 @@ import Combine
 
 class PetDetailsViewModel: ObservableObject {
     @Published var pet: Pet
+    private var token: String
     private var hungerTimer: Timer?
     private var thirstTimer: Timer?
     private var careTimer: Timer?
+    private let petService = PetService()
 
-    init(pet: Pet) {
+    init(pet: Pet, token: String) {
         self.pet = pet
+        self.token = token
         startTimers()
     }
 
@@ -24,18 +27,18 @@ class PetDetailsViewModel: ObservableObject {
     }
 
     func startTimers() {
-        // Schedule the hunger update after 30 minutes
-        hungerTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { _ in
+        // Schedule the hunger update after 3 minutes
+        hungerTimer = Timer.scheduledTimer(withTimeInterval: 3 * 60, repeats: true) { _ in
             self.updateNeeds(need: .hungry)
         }
 
-        // Schedule the thirst update after 15 minutes
-        thirstTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) { _ in
+        // Schedule the thirst update after 1 minute
+        thirstTimer = Timer.scheduledTimer(withTimeInterval: 1 * 60, repeats: true) { _ in
             self.updateNeeds(need: .thirsty)
         }
 
-        // Schedule the care update after 10 minutes
-        careTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { _ in
+        // Schedule the care update after 2 minutes
+        careTimer = Timer.scheduledTimer(withTimeInterval: 2 * 60, repeats: true) { _ in
             self.updateNeeds(need: .care)
         }
     }
@@ -56,8 +59,8 @@ class PetDetailsViewModel: ObservableObject {
     }
 
     func playWithPet() {
+        pet.energyLevel = min(100, pet.energyLevel - 10)
         updateNeeds(need: .loved)
-        pet.energyLevel = max(0, pet.energyLevel - 10)
     }
 
     func petThePet() {
@@ -77,19 +80,26 @@ class PetDetailsViewModel: ObservableObject {
     private func updateMood() {
         if pet.energyLevel < 60 {
             pet.mood = .tired
+            savePetState()
             return
         }
 
         if pet.needs.contains(.hungry) || pet.needs.contains(.care) {
             pet.mood = .sad
+            savePetState()
+            return
         }
 
         if pet.needs.contains(.loved)   {
             pet.mood = .excited
+            savePetState()
+            return
         }
 
-        if pet.needs.contains(.full) && pet.needs.contains(.hydrated) && pet.needs.contains(.loved) {
+        if pet.needs.contains(.full) && pet.needs.contains(.hydrated) {
             pet.mood = .happy
+            savePetState()
+            return
         }
     }
 
@@ -121,6 +131,19 @@ class PetDetailsViewModel: ObservableObject {
         case .hungry: return "Hungry"
         case .thirsty: return "Thirsty"
         case .care: return "Needs Care"
+        }
+    }
+
+    private func savePetState() {
+        petService.updatePetState(pet: pet, token: token) { result in
+            switch result {
+            case .success(let updatedPet):
+                DispatchQueue.main.async {
+                    self.pet = updatedPet
+                }
+            case .failure(let error):
+                print("Failed to update pet: \(error.message)")
+            }
         }
     }
 }

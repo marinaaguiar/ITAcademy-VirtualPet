@@ -12,24 +12,39 @@ class PetService {
     private let baseURL = "http://localhost:8080/api/pets"
 
     func updatePetState(
-        petId: String,
+        pet: Pet,
         token: String,
         completion: @escaping (Result<Pet, ErrorResponse>) -> Void
     ) {
-        guard let url = URL(string: "\(baseURL)/\(petId)/pets") else {
-            print("Error 400: Invalid URL for updating pet state. Check URL: \(URL(string: "\(baseURL)/\(petId)/pets"))" )
+        guard let url = URL(string: "\(baseURL)/\(pet.id!)") else {
+            print("Error 400: Invalid URL for updating pet state.")
             completion(.failure(ErrorResponse(message: "Invalid URL", statusCode: 400)))
             return
         }
 
-        networkingService.request(url: url, method: .put, addAuthToken: true) { (result: Result<Pet, ErrorResponse>) in
-            switch result {
-            case .success(let updatedPetState):
-                print(updatedPetState)
-                completion(.success(updatedPetState))
-            case .failure(let error):
-                completion(.failure(error))
+        let petUpdateRequest = PetUpdate(
+            energyLevel: pet.energyLevel,
+            mood: pet.mood.rawValue.uppercased(),
+            needs: pet.needs.map { $0.rawValue.uppercased() },
+            type: pet.type.rawValue.uppercased()
+        )
+
+        do {
+            let body = try JSONEncoder().encode(petUpdateRequest)
+
+            networkingService.putRequest(url: url, body: body, addAuthToken: true) { (result: Result<Pet, ErrorResponse>) in
+                switch result {
+                case .success(let updatedPetState):
+                    print("Pet updated successfully!")
+                    completion(.success(updatedPetState))
+                case .failure(let error):
+                    print("Error updating pet: \(error.message)")
+                    completion(.failure(error))
+                }
             }
+        } catch {
+            print("Error encoding pet update data: \(error)")
+            completion(.failure(ErrorResponse(message: "Failed to encode pet data", statusCode: 400)))
         }
     }
 }

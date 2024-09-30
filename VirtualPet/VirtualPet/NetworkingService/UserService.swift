@@ -38,7 +38,7 @@ class UserService {
 
             networkingService.postRequest(url: url, body: body, addAuthToken: true) { (result: Result<[Pet], ErrorResponse>) in
                 switch result {
-                case .success(let pets):  // Return the updated list of pets
+                case .success(let pets): 
                     completion(.success(pets))
                 case .failure(let error):
                     completion(.failure(error))

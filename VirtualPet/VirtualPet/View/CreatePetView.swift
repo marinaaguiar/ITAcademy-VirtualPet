@@ -39,7 +39,7 @@ struct CreatePetView: View {
                         Section(header: Text("Choose Your Cat")) {
                             Picker("Color", selection: $viewModel.selectedCreature) {
                                 ForEach(PetType.allCases) { creature in
-                                    Text(creature.rawValue).tag(creature)
+                                    Text(creature.getString()).tag(creature)
                                 }
                             }
                             .pickerStyle(.menu)

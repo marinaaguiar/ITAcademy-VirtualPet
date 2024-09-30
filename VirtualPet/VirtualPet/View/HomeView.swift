@@ -139,7 +139,13 @@ struct PetListView: View {
 
             VStack {
                 List(homeViewModel.pets) { pet in
-                    NavigationLink(destination: PetDetailsView(viewModel: PetDetailsViewModel(pet: pet))) {
+                    NavigationLink(destination:
+                                    PetDetailsView(
+                                        viewModel: PetDetailsViewModel(
+                                            pet: pet,
+                                            token: authViewModel.authToken ?? "")
+                                    )
+                    ) {
                         HStack {
                             Image("\(pet.type.rawValue)")
                                 .resizable()

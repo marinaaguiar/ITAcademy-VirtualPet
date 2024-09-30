@@ -39,6 +39,7 @@ class AuthViewModel: ObservableObject {
                     self.isLoggedIn = true
                     self.loggedInUser = response.user
                     self.authToken = response.token
+                    UserDefaults.standard.set(response.token, forKey: "authToken")
                     onSuccess()
                 case .failure(let errorResponse):
                     self.alertMessage = errorResponse.message
@@ -62,6 +63,7 @@ class AuthViewModel: ObservableObject {
                     self.isLoggedIn = true
                     self.loggedInUser = response.user
                     self.authToken = response.token
+                    UserDefaults.standard.set(response.token, forKey: "authToken")
                     onSuccess()
                 case .failure(let errorResponse):
                     self.alertMessage = errorResponse.message

@@ -53,13 +53,11 @@ struct PetDetailsView: View {
                             .foregroundColor(.primary)
 
                         ZStack(alignment: .leading) {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.gray.opacity(0.3))
+                            ProgressView(value: Double(viewModel.pet.energyLevel), total: 100)
+                                .progressViewStyle(LinearProgressViewStyle(tint: viewModel.energyLevelColor(for: viewModel.pet.energyLevel)))
+                                .scaleEffect(x: 1, y: 4, anchor: .center)
                                 .frame(height: 20)
-
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(viewModel.energyLevelColor(for: viewModel.pet.energyLevel))
-                                .frame(width: CGFloat(viewModel.pet.energyLevel) / 100 * UIScreen.main.bounds.width * 0.8, height: 20)
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
                         }
                     }
 
@@ -98,7 +96,6 @@ struct PetDetailsView: View {
                 .background(Color.white)
                 .cornerRadius(20)
                 .shadow(color: Color.white.opacity(0.5),radius: 50)
-//                .edgesIgnoringSafeArea(.bottom)
             }
             .padding(.top, 350)
         }
@@ -173,10 +170,10 @@ struct PetDetailsView_Previews: PreviewProvider {
             id: UUID().uuidString,
             name: "Claudio",
             uniqueCharacteristic: "Fluffy tail",
-            energyLevel: 80,
+            energyLevel: 100,
             type: .lightGrayCat,
             mood: .happy,
             needs: [.full, .loved]
-        )))
+        ), token: ""))
     }
 }
