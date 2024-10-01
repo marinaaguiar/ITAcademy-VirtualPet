@@ -18,6 +18,7 @@ class AuthViewModel: ObservableObject {
     @Published var authToken: String? = nil
     @Published var isLoggedIn: Bool = false
     @Published var users: [User]
+    @Published var admin: Bool = false
 
     private let authService = AuthService()
 
@@ -63,6 +64,7 @@ class AuthViewModel: ObservableObject {
                     self.isLoggedIn = true
                     self.loggedInUser = response.user
                     self.authToken = response.token
+                    self.admin = response.user.admin
                     UserDefaults.standard.set(response.token, forKey: "authToken")
                     onSuccess()
                 case .failure(let errorResponse):

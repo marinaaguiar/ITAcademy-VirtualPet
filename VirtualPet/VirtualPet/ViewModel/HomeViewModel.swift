@@ -14,23 +14,34 @@ class HomeViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var showCreatePetView: Bool = false
     @Published var createPetViewModel: CreatePetViewModel? = nil
+    @Published var showAlert: Bool = false
+    @Published var alertMessage: String = ""
 
     private let userService = UserService()
 
-    func fetchUserPets(userId: String, token: String) {
-        print("Fetching pets for user ID: \(userId)")
-        isLoading = true
-
-        userService.getUserPets(userId: userId, token: token) { [weak self] result in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {  
-                guard let self = self else { return }
-                self.isLoading = false
-                switch result {
-                case .success(let pets):
-                    self.pets = pets
-                case .failure(let error):
-                    print("Error fetching pets: \(error.message)")
-                    self.errorMessage = error.message
+    func fetchPets(userId: String, token: String, isAdmin: Bool) {
+        if isAdmin {
+            userService.getAllPets(userId: userId, token: token) { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let pets):
+                        self.pets = pets
+                    case .failure(let error):
+                        self.alertMessage = error.message
+                        self.showAlert = true
+                    }
+                }
+            }
+        } else {
+            userService.getUserPets(userId: userId, token: token) { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let pets):
+                        self.pets = pets
+                    case .failure(let error):
+                        self.alertMessage = error.message
+                        self.showAlert = true
+                    }
                 }
             }
         }
@@ -41,7 +52,7 @@ class HomeViewModel: ObservableObject {
         showCreatePetView = true
     }
 
-    func handlePetCreationSuccess(userId: String, token: String) {
-        fetchUserPets(userId: userId, token: token)
+    func handlePetCreationSuccess(userId: String, token: String, isAdmin: Bool) {
+        fetchPets(userId: userId, token: token, isAdmin: isAdmin)
     }
 }

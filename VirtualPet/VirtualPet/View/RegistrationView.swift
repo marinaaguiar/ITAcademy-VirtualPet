@@ -55,7 +55,7 @@ struct RegistrationView_Previews: PreviewProvider {
     static var previews: some View {
         RegistrationView(
             viewModel: AuthViewModel(users: [
-                User(id: UUID().uuidString, username: "Marina", password: "***", petIds: [])
+                User(id: UUID().uuidString, username: "Marina", password: "***", petIds: [], admin: false)
             ]), onSuccess: {
                 print("Registration successful!")
             }

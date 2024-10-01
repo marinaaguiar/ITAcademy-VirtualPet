@@ -12,4 +12,5 @@ struct User: Identifiable, Codable {
     var username: String
     var password: String
     var petIds: [String]
+    var admin: Bool
 }

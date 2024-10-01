@@ -11,6 +11,7 @@ struct HomeView: View {
     @StateObject private var homeViewModel = HomeViewModel()
     @ObservedObject var authViewModel: AuthViewModel
     @EnvironmentObject var router: Router
+    @State private var isAdmin: Bool = false
 
     var body: some View {
         ZStack {
@@ -48,7 +49,7 @@ struct HomeView: View {
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 if let loggedInUser = authViewModel.loggedInUser, let token = authViewModel.authToken {
-                    homeViewModel.fetchUserPets(userId: loggedInUser.id, token: token)
+                    homeViewModel.fetchPets(userId: loggedInUser.id, token: token, isAdmin: authViewModel.admin)
                 } else {
                     print("User or token is missing!")
                 }
@@ -59,7 +60,7 @@ struct HomeView: View {
                 CreatePetView(viewModel: viewModel, isPresented: $homeViewModel.showCreatePetView)
                     .onDisappear {
                         if let user = authViewModel.loggedInUser, let token = authViewModel.authToken {
-                            homeViewModel.handlePetCreationSuccess(userId: user.id, token: token)
+                            homeViewModel.handlePetCreationSuccess(userId: user.id, token: token, isAdmin: user.admin)
                         }
                     }
             }

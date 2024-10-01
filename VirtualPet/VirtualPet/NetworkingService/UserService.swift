@@ -27,6 +27,22 @@ class UserService {
         }
     }
 
+    func getAllPets(userId: String, token: String, completion: @escaping (Result<[Pet], ErrorResponse>) -> Void) {
+        guard let url = URL(string: "\(baseURL)/\(userId)/pets") else {
+            completion(.failure(ErrorResponse(message: "Invalid URL", statusCode: 400)))
+            return
+        }
+
+        networkingService.request(url: url, method: .get, addAuthToken: true) { (result: Result<[Pet], ErrorResponse>) in
+            switch result {
+            case .success(let pets):
+                completion(.success(pets))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
     func addPetToUser(userId: String, pet: Pet, completion: @escaping (Result<[Pet], ErrorResponse>) -> Void) {
         guard let url = URL(string: "\(baseURL)/\(userId)/addPet") else {
             completion(.failure(ErrorResponse(message: "Invalid URL", statusCode: 400)))

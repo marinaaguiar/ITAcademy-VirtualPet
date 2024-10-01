@@ -10,4 +10,5 @@ struct UserResponse: Identifiable, Codable {
     var username: String
     var password: String?
     var pet: [Pet]
+    var isAdmin: Bool
 }
