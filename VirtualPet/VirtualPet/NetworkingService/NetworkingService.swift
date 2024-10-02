@@ -110,4 +110,46 @@ class NetworkingService {
     func putRequest<T: Decodable>(url: URL, body: Data, addAuthToken: Bool = true, completion: @escaping(Result<T, ErrorResponse>) -> Void) {
         request(url: url, method: .put, body: body, addAuthToken: addAuthToken, completion: completion)
     }
+
+    func deleteRequest(url: URL, addAuthToken: Bool = true, completion: @escaping(Result<Void, ErrorResponse>) -> Void) {
+        var request = URLRequest(url: url)
+        request.httpMethod = HTTPMethod.delete.rawValue
+
+        if addAuthToken, let token = authToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            print("Authorization Token: \(token)")
+        }
+
+        let task = sharedSession.dataTask(with: request) { data, response, error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    let errorResponse = ErrorResponse(message: error.localizedDescription, statusCode: 500)
+                    completion(.failure(errorResponse))
+                }
+                return
+            }
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                DispatchQueue.main.async {
+                    let errorResponse = ErrorResponse(message: "Invalid response from server", statusCode: 500)
+                    completion(.failure(errorResponse))
+                }
+                return
+            }
+
+            print("Status code: \(httpResponse.statusCode)")
+
+            if (200...299).contains(httpResponse.statusCode) {
+                DispatchQueue.main.async {
+                    completion(.success(()))
+                }
+            } else {
+                DispatchQueue.main.async {
+                    let errorResponse = ErrorResponse(message: "Error: \(httpResponse.statusCode)", statusCode: httpResponse.statusCode)
+                    completion(.failure(errorResponse))
+                }
+            }
+        }
+        task.resume()
+    }
 }

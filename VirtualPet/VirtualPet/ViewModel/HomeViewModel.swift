@@ -18,6 +18,7 @@ class HomeViewModel: ObservableObject {
     @Published var alertMessage: String = ""
 
     private let userService = UserService()
+    private let petService = PetService()
 
     func fetchPets(userId: String, token: String, isAdmin: Bool) {
         if isAdmin {
@@ -47,6 +48,20 @@ class HomeViewModel: ObservableObject {
         }
     }
 
+    func deletePetAndUpdateList(petId: String, token: String) {
+        petService.deletePet(petId: petId, token: token) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self.pets.removeAll { $0.id == petId }
+                case .failure(let error):
+                    self.alertMessage = error.message
+                    self.showAlert = true
+                }
+            }
+        }
+    }
+    
     func initializeCreatePetViewModel(userId: String) {
         createPetViewModel = CreatePetViewModel(pets: pets, userId: userId)
         showCreatePetView = true

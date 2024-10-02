@@ -139,31 +139,35 @@ struct PetListView: View {
             Color.white
 
             VStack {
-                List(homeViewModel.pets) { pet in
-                    NavigationLink(destination:
-                                    PetDetailsView(
-                                        viewModel: PetDetailsViewModel(
-                                            pet: pet,
-                                            token: authViewModel.authToken ?? "")
-                                    )
-                    ) {
-                        HStack {
-                            Image("\(pet.type.rawValue)")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
-                                .padding(.trailing, 10)
+                // Ensure ForEach is inside List and apply onDelete to ForEach
+                List {
+                    ForEach(homeViewModel.pets, id: \.id) { pet in
+                        NavigationLink(destination:
+                                        PetDetailsView(
+                                            viewModel: PetDetailsViewModel(
+                                                pet: pet,
+                                                token: authViewModel.authToken ?? "")
+                                        )
+                        ) {
+                            HStack {
+                                Image("\(pet.type.rawValue)")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(Circle())
+                                    .padding(.trailing, 10)
 
-                            VStack(alignment: .leading) {
-                                Text(pet.name)
-                                    .font(.headline)
-                                Text(pet.type.getString())
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
+                                VStack(alignment: .leading) {
+                                    Text(pet.name)
+                                        .font(.headline)
+                                    Text(pet.type.getString())
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                }
                             }
                         }
                     }
+                    .onDelete(perform: deletePet)
                 }
                 FloatingActionButton(
                     homeViewModel: homeViewModel,
@@ -177,8 +181,15 @@ struct PetListView: View {
         }
         .padding(.bottom, -40)
     }
-}
 
+    func deletePet(at offsets: IndexSet) {
+        if let index = offsets.first {
+            let petIdToDelete = homeViewModel.pets[index].id
+            let token = authViewModel.authToken // Provide the token here
+            homeViewModel.deletePetAndUpdateList(petId: petIdToDelete!, token: token!)
+        }
+    }
+}
 
 // MARK: - Floating Action Button
 struct FloatingActionButton: View {

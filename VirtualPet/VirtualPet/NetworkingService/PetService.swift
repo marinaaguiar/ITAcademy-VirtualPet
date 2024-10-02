@@ -47,4 +47,20 @@ class PetService {
             completion(.failure(ErrorResponse(message: "Failed to encode pet data", statusCode: 400)))
         }
     }
+
+    func deletePet(petId: String, token: String, completion: @escaping (Result<Void, ErrorResponse>) -> Void) {
+        guard let url = URL(string: "\(baseURL)/\(petId)") else {
+            completion(.failure(ErrorResponse(message: "Invalid URL", statusCode: 400)))
+            return
+        }
+
+        networkingService.deleteRequest(url: url, addAuthToken: true) { result in
+            switch result {
+            case .success:
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }
