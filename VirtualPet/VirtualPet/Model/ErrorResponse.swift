@@ -9,5 +9,5 @@ import Foundation
 
 struct ErrorResponse: Error, Codable {
     let message: String
-    var statusCode: Int
+    var statusCode: Int?
 }

@@ -81,19 +81,27 @@ class NetworkingService {
             }
 
             let rawResponse = String(data: data, encoding: .utf8)
+            print("Raw response: \(rawResponse ?? "")")
 
             do {
-                let decodedData = try JSONDecoder().decode(T.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(decodedData))
+                if (200...299).contains(httpResponse.statusCode) {
+                    let decodedData = try JSONDecoder().decode(T.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(.success(decodedData))
+                    }
+                } else {
+                    let errorData = try JSONDecoder().decode(ErrorResponse.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(.failure(errorData))
+                    }
                 }
             } catch {
-                print(error)
+                print("Decoding error: \(error)")
+                print("Raw response: \(String(data: data, encoding: .utf8) ?? "")")
                 DispatchQueue.main.async {
                     let errorResponse = ErrorResponse(message: "Failed to decode response", statusCode: 500)
                     completion(.failure(errorResponse))
                 }
-                print("Decoding error: \(error.localizedDescription)")
             }
         }
         task.resume()
